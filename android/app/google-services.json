@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "854119119098",
+    "project_id": "project-liyfit",
+    "storage_bucket": "project-liyfit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854119119098:android:3542a721eef84e2e003143",
+        "android_client_info": {
+          "package_name": "com.liyfitproject787"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854119119098-m90lnngv3k0f2apna9urfar9trvlhq0h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.liyfitproject787",
+            "certificate_hash": "72efd562192cfd7772d8656d89a373cdeac44b2c"
+          }
+        },
+        {
+          "client_id": "854119119098-k3hvs9gf47e4ugnbc9cmrmce3v2mb3fv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUKvtBvwTmq29F0AdUGYnZuSCPAQFJ8xA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854119119098-k3hvs9gf47e4ugnbc9cmrmce3v2mb3fv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
