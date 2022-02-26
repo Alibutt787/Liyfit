@@ -9,16 +9,10 @@ import 'react-native-gesture-handler';
   import React, {useEffect} from 'react';
   import {StatusBar, PermissionsAndroid,Button,View, Platform,Text} from 'react-native';
   import SplashScreen from 'react-native-splash-screen'
-import {SignNavigation} from './src/navigation/SignNavigation';
-
-
-
+import {SignNavigation} from './src/component/signin/signinNavigation/SignNavigation';
   const App= () => {
-
- 
     useEffect(() => {
       SplashScreen.hide();
-     
     }, [])
     const androidPermission = async () => {
       try {
