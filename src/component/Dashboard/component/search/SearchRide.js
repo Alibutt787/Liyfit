@@ -1,10 +1,10 @@
-
- import React , { useState } from 'react';
+import React , { useState } from 'react';
 import { SafeAreaView, View,TextInput,ScrollView ,Dimensions, VirtualizedList,Image,Modal, StyleSheet, Text,TouchableOpacity, StatusBar } from 'react-native';
 import StarRating from './RatingStar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button} from 'react-native-elements';
-
+import Headericon from '../../../CustomComponent/Headericon';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 const { width } = Dimensions.get("window");
 const DATA = [];
 
@@ -52,34 +52,7 @@ const SearchRide = ({navigation}) => {
   return (
     <SafeAreaView >
        {/* Open drawer screen */}
-       <View style={{flexDirection:'row',backgroundColor:'white'}}>
-        <Button
-                icon={{
-                  name: 'arrow-left',
-                  type: 'font-awesome',
-                  size: 20,
-                  color: 'black'}}
-                iconLeft
-                iconContainerStyle={{ color:'black',  }}
-                buttonStyle={{
-                backgroundColor: 'white',
-                width:70,
-                height:55, 
-                backgroundColor:'white',
-               
-               
-                }}
-                containerStyle={{
-             
-                  marginHorizontal: 0,
-                  marginVertical: 0,
-                }}
-                onPress={()=>{navigation.openDrawer()}}
-              />
-             
-
-<Text style={{padding:18,marginLeft:'10%',fontSize:20}}>Explore Ride</Text>
-</View>
+ <Headericon name="bars" des="Search Ride" navigation={navigation} />
 {/* Search ride field */}
            <View style={styles.searchBox}>
         <TextInput 
@@ -112,33 +85,8 @@ const SearchRide = ({navigation}) => {
                       <View >
 {/* Back button in model */}
                 
- <View style={{flexDirection:'row',backgroundColor:'white'}}>
-        <Button
-         title="Back"
-                icon={{
-                  name: 'arrow-left',
-                  type: 'font-awesome',
-                  size: 20,
-                  color: 'black'}}
-                iconLeft
-                titleStyle={{ color: 'black'}}
-                iconContainerStyle={{ color:'black',  }}
-                buttonStyle={{
-                backgroundColor: 'white',
-                width:75,
-                height:55, 
-                backgroundColor:'white',
-               
-               
-                }}
-                containerStyle={{
-                  
-                  marginHorizontal: 0,
-                  marginVertical: 0,
-                }}
-                onPress={toggleModalVisibility}
-              />
-            
+  <View style={{flexDirection:'row',backgroundColor:"white"}}   >
+<Icon name="trash" size={25} color="red"  onPress={toggleModalVisibility} style={{padding:15,paddingLeft:15,paddingRight:15}}/>
 </View>
               {/* image of model */}
                       <Image   style={{height:150,width:'100%'}}

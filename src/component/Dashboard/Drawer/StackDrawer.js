@@ -7,9 +7,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import HomeScreen from '../Welcome/Home';
 import CreatePostNav from '../component/createPost/CreatePostNav';
 import BookingHistory from '../component/Booking/BookingHistory';
-import SearchRide from '../component/search/SearchRide';
 import Message from '../component/message/Message'
 import ProfileNavigation from '../component/profile/ProfileNavigation';
+import SearchNavigation from '../component/search/SearchNavigation';
 
 const Drawer = createDrawerNavigator();
 
@@ -59,9 +59,9 @@ export default function StackDrawer() {
         ),
       }}
     />:<></>}
-      <Drawer.Screen
+        <Drawer.Screen
         name="Search Ride"
-        component={SearchRide}
+        component={SearchNavigation}
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="search" size={22} color={color} />
