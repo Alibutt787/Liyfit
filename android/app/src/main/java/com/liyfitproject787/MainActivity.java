@@ -37,9 +37,14 @@ public class MainActivity extends ReactActivity {
         return "Liyfit786";
     }
     @Override
-protected void onCreate(Bundle savedInstanceState) {
-  super.onCreate(null);
-}
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);  // here
+        super.onCreate(savedInstanceState);
+      //  super.onCreate(null);
+    }
+// protected void onCreate(Bundle savedInstanceState) {
+//   super.onCreate(null);
+// }
 
 
 }

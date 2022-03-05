@@ -1,31 +1,46 @@
 import React,{useState,useRef} from 'react'
 import { StyleSheet, TextInput,Text, View,Dimensions,ScrollView,SafeAreaView,TouchableHighlight,Button, TouchableOpacity } from 'react-native'
-// import DatePicker from 'react-native-modern-datepicker';
-import DatePicker,{ getToday, getFormatedDate } from 'react-native-modern-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {Input} from 'react-native-elements';
 import {Formik} from 'formik';
-import {createPostSchema} from './postLogin/Schema'
+import {createPostSchema} from '../createPost/postLogin/Schema'
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Headericon from '../../../CustomComponent/Headericon';
 
 const {width, height} =Dimensions.get('window')
 
-const CreatePostForm = ({navigation}) => {
+const AttractPeople = ({navigation}) => {
+
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+console.log(date.getDate());
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+
   console.log(width,'pakista',height)
   function sig() {
    // alert(Password);
   }
-  const [selectedDate, setSelectedDate] = useState('');
-  const [time, setTime] = useState('');
-  console.log(time);
-  const [Opend, setOpend] = useState(false);
-  const [OpendTime, setOpendTime] = useState(false);
 
-  console.log('select',selectedDate);
-const hy =new Date().getFullYear();
-const hy1 =new Date().getMonth();
-const hy2 =new Date().getDate();
-console.log(`${hy}/${hy1+2}/${hy2}`);
-
+  
 
   return (
     <SafeAreaView >
@@ -34,38 +49,23 @@ console.log(`${hy}/${hy1+2}/${hy2}`);
 <ScrollView>
 <View style={styles.container}> 
  
- <View style={{flexDirection:'row',backgroundColor:"white"}}>
-<Icon name="arrow-left" size={25} color="black"   onPress={() => navigation.goBack()} style={{paddingTop:20,paddingLeft:15,paddingRight:20}}/>
-<Text style={{padding:15,marginLeft:'0%',marginTop:9,fontSize:22,color:'black'}}>Create Post</Text>
-</View>
+<Headericon name="bars" des="Attract People" navigation={navigation}/>
   <View  style={styles.loginbox}>       
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          maximumDate  ={new Date( date.getFullYear(), date.getMonth()+1, date.getDate())}
+         minimumDate ={new Date( date.getFullYear(), date.getMonth(), date.getDate())}
+          mode={mode}
+          dayOfWeekFormat={'{dayofweek.abbreviated(2)}'}
+          is24Hour={false}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+ 
 
-  { Opend?  <DatePicker
-      options={{
-        backgroundColor: 'white',
-        textHeaderColor: 'black',
-        textDefaultColor: 'black',
-        selectedTextColor: 'black',
-        mainColor: '#F4722B',
-        textSecondaryColor: 'black',
-        borderColor: 'rgba(122, 146, 165, 0.1)',
-      }}
-      selected={getToday()}
-      onDateChange={(e)=>{setOpend(false),setSelectedDate(e)}}
-      minimumDate={getToday()}
-      maximumDate={`${hy}/${hy1+2}/${hy2}`}
-      mode="calendar"
-      minuteInterval={30}
-      style={{ borderRadius: 10 }}
-    />:<></>}
-
-{ OpendTime?
-<DatePicker style={{height:60}}
-      mode="time"
-      minuteInterval={3}
-      onTimeChange={(selectedTime) => {setTime(selectedTime),setOpendTime(false)}}
-    />:<></>
-}
 <Formik
    validationSchema={createPostSchema}
    initialValues={{ initialPoint: '', finalPoint: '', Description:'' }}
@@ -111,11 +111,11 @@ console.log(`${hy}/${hy1+2}/${hy2}`);
          <Text style={{ fontSize: 10, color: 'red' }}>{errors.finalPoint}</Text>
        }
        <TouchableOpacity 
-        onPress={()=>{setOpend(true)}} >
+        onPress={showDatepicker}
+        >
        <Input
        disabled
-    name={selectedDate}
-    placeholder={selectedDate?selectedDate:'20yy/mm/dd'}
+    placeholder={`${date.toDateString()}`}
         leftIcon={{ type: 'font-awesome', name: 'calendar' }}
         leftIconContainerStyle={{color:'red'}}
         onChangeText={value => this.setState({ comment: value })}
@@ -127,12 +127,10 @@ console.log(`${hy}/${hy1+2}/${hy2}`);
        </TouchableOpacity>
 
 
-       <TouchableOpacity 
-        onPress={()=>{setOpendTime(true)}} >
+       <TouchableOpacity onPress={showTimepicker}  >
        <Input
        disabled
-    name={time}
-    placeholder={time?time:'When'}
+       placeholder={`${date.toLocaleTimeString()}`}
         leftIcon={{ type: 'font-awesome', name: 'clock-o' }}
         leftIconContainerStyle={{color:'red'}}
         onChangeText={value => this.setState({ comment: value })}
@@ -176,7 +174,7 @@ console.log(`${hy}/${hy1+2}/${hy2}`);
   )
 }
 
-export default CreatePostForm;
+export default AttractPeople;
 const styles = StyleSheet.create({
     container: {
   

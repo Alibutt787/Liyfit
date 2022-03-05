@@ -1,56 +1,20 @@
 import React , { useState } from 'react';
-import { SafeAreaView, View,TextInput,ScrollView ,Dimensions, VirtualizedList,Image,Modal, StyleSheet, Text,TouchableOpacity, StatusBar } from 'react-native';
+import { SafeAreaView, View,TextInput,ScrollView ,Dimensions, StyleSheet, Text,TouchableOpacity, StatusBar } from 'react-native';
 import StarRating from './RatingStar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Headericon from '../../../CustomComponent/Headericon';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Avatar} from 'react-native-elements';
+import { color } from 'react-native-elements/dist/helpers';
+
 const { width } = Dimensions.get("window");
-const DATA = [];
-
-const getItem = (data, index) => ({
-  id: Math.random().toString(12).substring(0),
-  title: `Item ${index+1}`
-});
-
-  const getItemCount = (data) => 50;
-
-const Item = ({ toggleModalVisibility}) => (
-    <TouchableOpacity onPress={toggleModalVisibility}>
-    <View style={styles.card}>
-      <View style={styles.cardImgWrapper}>
-     
-        <Image
-          source={require('../../../../assets/Liyfit.png')}
-          resizeMode="cover"
-          style={styles.cardImg}
-        />
-      </View>
-      <View style={styles.cardInfo}>
-        <Text style={styles.cardTitle}>Ali Butt</Text>
-        <StarRating ratings={3} reviews={'Going to Lahore'} />
-        <Text numberOfLines={2} style={styles.cardDetails}>pakistan</Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
 
 const SearchRide = ({navigation}) => {
-
-      // This is to manage Modal State
-      const [isModalVisible, setModalVisible] = useState(false);
-  
-      // This is to manage TextInput State
-      const [inputValue, setInputValue] = useState("");
-    
-      // Create toggleModalVisibility function that will
-      // Open and close modal upon button clicks.
-      const toggleModalVisibility = () => {
-          setModalVisible(!isModalVisible);
-      };
-
-  return (
+  const [uri, setUri] = useState('');
+const array=[1,2,3,4,5,6,7,8,9,10];
+return (
     <SafeAreaView >
+      <ScrollView>
        {/* Open drawer screen */}
  <Headericon name="bars" des="Search Ride" navigation={navigation} />
 {/* Search ride field */}
@@ -64,119 +28,53 @@ const SearchRide = ({navigation}) => {
         />
         <Ionicons name="ios-search" size={25} />
       </View>
-      {/* Search  result is desplay */}
-      <VirtualizedList  style={{marginTop:20}}
-        data={DATA}
-        initialNumToRender={4}
-        renderItem={() =><Item  navigation={navigation} toggleModalVisibility={toggleModalVisibility} />}
-        keyExtractor={item => item.id}
-        getItemCount={getItemCount}
-        getItem={getItem}
-      />
-{/* Model is started */}
-<Modal animationType="slide" 
-                   transparent visible={isModalVisible} 
-                   propagateSwipe={true}
-                   presentationStyle="overFullScreen" 
-                   onDismiss={toggleModalVisibility}>
-                
-                <View style={styles.viewWrapper}>
-                    <View style={styles.modalView}>
-                      <View >
-{/* Back button in model */}
-                
-  <View style={{flexDirection:'row',backgroundColor:"white"}}   >
-<Icon name="trash" size={25} color="red"  onPress={toggleModalVisibility} style={{padding:15,paddingLeft:15,paddingRight:15}}/>
-</View>
-              {/* image of model */}
-                      <Image   style={{height:150,width:'100%'}}
-          source={require('../../../../assets/Liyfit.png')}
-          resizeMode="cover"
-        
-        />
 
-                      </View>
-
-
-{/* Other Details of the Search Post in model*/}
-<View style={{paddingLeft:20,paddingRight:50,paddingTop:20, lineHeight: 30}}>
-  <Text>Post By: Ali Butt</Text>
-  <Text>{'\n'}Started Point: Sialkot</Text>
-  <Text>{'\n'}Final Point: Lahore</Text>
-  <Text>{'\n'}Vehicle: BMW Model 2019</Text>
-  <Text>{'\n'}Fair charges per km</Text>
-  <Text>{'\n'}Vehicle: BMW Model 2019</Text>
-  <Text style={{textAlign:'justify'}}>{'\n'}Description: dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-optio, eaque rerum! Provident</Text>
-
-</View>
-           
-                        {/** This button is responsible to close the modal */}
-                   
-         
-<View  style={{flexDirection:'row',justifyContent:'center',alignItems:'center',height:80}}>
-<Button
-                title="Chat"
-                icon={{
-                  name: 'comments',
-                  type: 'font-awesome',
-                  size: 18,
-                  color: 'white',
-             
-                 
-                }}
-                iconRight
-                iconContainerStyle={{ color:'white'  }}
-                titleStyle={{}}
-                buttonStyle={{height:60}}
-                containerStyle={{
-                
-                  width:150,
-                 justifyContent:'flex-start',
-                  marginHorizontal: 0,
-                  marginVertical: 0,
-                }}
-                onPress={() =>{alert('Book Ride')}}
-              />
-
-        <Text>  </Text>
+      {array.map((val,ind)=>{
+        return  <TouchableOpacity  key={ind}   
+        onPress={() =>{navigation.navigate('ViewSearchPost')}}>
+    <View style={styles.card}>
+    <Text  style={{position:'absolute',top:80,right:10}}> <Ionicons name="chevron-forward" color="green" size={35} /></Text>
+      <View  style={{borderBottomColor:'grey',borderBottomWidth:2}}>
      
-        <Button
-                title="Book"
-                icon={{
-                  name: 'car',
-                  type: 'font-awesome',
-                  size: 15,
-                  color: 'white',
-             
-                 
-                }}
-                iconRight
-                iconContainerStyle={{ color:'white'  }}
-                titleStyle={{}}
-                buttonStyle={{
-                  backgroundColor: 'green',
-          
-              height:60
-               
-                }}
-                containerStyle={{
-                
-                  width:150,
-                 justifyContent:'center',
-                  marginHorizontal: 0,
-                  marginVertical: 0,
-                }}
-                onPress={() =>{alert('Book Ride')}}
-              />
-</View>
- </View>
-                    
-                </View>
-              
-            </Modal>
+      <Text style={{fontSize:20,marginBottom:5}} >  <Icon name="currency-brl"  size={25} /> <Text style={{color:'red'}}>1500 </Text> for 3 passengers</Text>
+      
+        <View >
+      
+        <View>
+          <Text > <Icon name="calendar-month"  size={25} /> Sun 27 Feb 2:00 </Text>
+          <Text > <Icon name="alpha-a-circle" color='blue' size={25} />  Jhelum </Text>
+        <Text  > <Icon name="alpha-b-circle" color='green' size={25} />  Lahore  </Text>
+       <View style={{flexDirection:'row',paddingLeft:5,marginTop:8}}>
+        <Icon name="comment-text-outline"  size={25}  />
+        <Text   numberOfLines={2} >Lahore lahore lahore lahore lahorelahore lahorelahore lahore LahoreLahoreLahoreLahoreLahore   </Text>
+        </View>
+        <Text   style={{fontSize:9,padding:5}} >  <Icon name="clock-check-outline"  size={10} /> Published 30 min ago</Text>
+        </View>
+       <View>
+       
+       </View>
+        </View>
+
+      </View>
+      <View style={{padding:10,paddingTop:8,flexDirection:'row',alignItems:'center'}}>
+     <Avatar
+              size={30}
+              rounded
+              source={uri ? {uri} :{ uri: 'https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599553__340.jpg' }}
+              title="Ali"
+              containerStyle={{ backgroundColor: 'grey',width:50,height:50,borderRadius:100 }} 
+              // onPress={()=>{navigation.navigate('ViewProfilePhotoScreen', {uri:{uri}})}}
+            avatarStyle={{width:50,height:50,borderRadius:100}} >
+            </Avatar>
+           
+            <StarRating style={{paddingLeft:12}} ratings={3} reviews={'Ali Butt'} />
+     </View>
+    </View>
+  </TouchableOpacity>
+
+     })}
+ 
+            </ScrollView>
     </SafeAreaView>
   );
 }
@@ -199,73 +97,24 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 10,
   },
-  item: {
-    backgroundColor: '#f9c2ff',
-    height: 150,
-    justifyContent: 'center',
-    marginVertical: 8,
-    marginHorizontal: 16,
-    padding: 20,
-  },
-  title: {
-    fontSize: 22,
-  }, 
   card: {
-    height: 100,
+    //  height: 170,
+    margin:10,padding:8,paddingBottom:0,
+    borderRadius:10,
     marginVertical: 10,
-    flexDirection: 'row',
     shadowColor: '#999',
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    backgroundColor:'white',
+    position:'relative'
   },
-  cardImgWrapper: {
-    flex: 1,
-  },
-  cardImg: {
-    height: '100%',
-    width: '100%',
-    alignSelf: 'center',
-    borderRadius: 8,
-    borderBottomRightRadius: 0,
-    borderTopRightRadius: 0,
-  },
-  cardInfo: {
-    flex: 2,
-    padding: 10,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderBottomRightRadius: 8,
-    borderTopRightRadius: 8,
-    backgroundColor: '#fff',
-  },
-  cardTitle: {
-    fontWeight: 'bold',
-  },
-  cardDetails: {
-    fontSize: 12,
-    color: '#444',
-  }, viewWrapper: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
-},
-modalView: {
-   
-    position: "absolute",
-    top: "20%",
-    left: "45%",
-    elevation: 5,
-    transform: [{ translateX: -(width * 0.4) }, 
-                { translateY: -100 }],
-    
-    width: width * 0.9,
-    backgroundColor: "#fff",
-    borderRadius: 7,
-},
+ 
+
+  
+ 
+
 
 });
 

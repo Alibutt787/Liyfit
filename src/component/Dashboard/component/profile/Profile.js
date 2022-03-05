@@ -11,8 +11,10 @@ const Profile = ({navigation}) => {
   const [uri, setUri] = useState('');
   const pickPicture = () => {
     ImagePicker.openPicker({
-        width: width,
-        height: 420,
+      cropperStatusBarColor: 'black',
+      showCropFrame: true,
+      showCropGuidelines: true,
+      width:800,height:800,
         cropping: true
       }).then(image => {
         console.log(image ?.path);
@@ -25,10 +27,6 @@ const Profile = ({navigation}) => {
   function sig() {
    // alert(Password);
   }
-  
- 
-
-
   return (
     <SafeAreaView >
 <ScrollView>
@@ -40,10 +38,11 @@ const Profile = ({navigation}) => {
               size={64}
               rounded
               source={uri ? {uri} :null}
-              title="DA"
-              containerStyle={{ backgroundColor: 'grey',width:150,height:150,borderRadius:100,alignSelf:'center' }} 
+              icon={{ name: 'user', type: 'font-awesome' }}
+              containerStyle={{ backgroundColor: 'white',width:150,height:150,borderRadius:100
+              ,alignSelf:'center',resizeMode:'contain' }} 
               onPress={()=>{navigation.navigate('ViewProfilePhotoScreen', {uri:{uri}})}}
-            avatarStyle={{width:150,height:150,borderRadius:90}} >
+            avatarStyle={{width:150,height:150,borderRadius:200,resizeMode:'contain'}} >
               <Avatar.Accessory size={23}   onPress={pickPicture}/>
             </Avatar>
 

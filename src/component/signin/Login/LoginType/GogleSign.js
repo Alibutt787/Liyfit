@@ -21,7 +21,7 @@ export const GogleSign = ({navigation}) => {
   });
   GoogleSignin.configure();
   async  function _signIn (){
-    navigation.navigate('WelcomeHomeScreen')
+    navigation.navigate('TermConditions')
     try {
     //  const hy = await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true }); // <-- Add this
     //  const idToken = await GoogleSignin.signIn();
@@ -29,7 +29,7 @@ export const GogleSign = ({navigation}) => {
     //   console.log('Goggle',googleCredential);
     //   console.log('idToken',idToken);
     //   return auth().signInWithCredential(googleCredential);
-    alert('Successfully longin');
+   
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow

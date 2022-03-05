@@ -2,12 +2,14 @@ import React,{useState} from 'react'
 import { StyleSheet, Text, View,Dimensions,ScrollView,SafeAreaView,TouchableHighlight, TouchableOpacity } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Input,Button} from 'react-native-elements';
+import ImagePicker from 'react-native-image-crop-picker';
+import { Avatar } from 'react-native-elements'
 import {Formik} from 'formik';
 import * as yup from 'yup'
-import SubHeadericon from '../../../CustomComponent/SubHeadericon';
+import SubHeadericon from '../../../../CustomComponent/SubHeadericon';
 const {width, height} =Dimensions.get('window')
 
-const EditProfile = ({navigation}) => {
+const BasicInfo = ({navigation}) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 console.log(date.getDate());
@@ -37,7 +39,20 @@ console.log(date.getDate());
   function sig() {
    // alert(Password);
   }
-  
+  const [uri, setUri] = useState('');
+  const pickPicture = () => {
+    ImagePicker.openPicker({
+      cropperStatusBarColor: 'black',
+      cropping: true,
+      mediaType: 'photo',
+      showCropFrame: true,
+      showCropGuidelines: true,
+      }).then(image => {
+        console.log(image ?.path);
+        setUri(image ?.path)
+      }).catch(e=>console.log('pakistan'))
+  };
+
 
   return (
     <SafeAreaView >
@@ -45,9 +60,27 @@ console.log(date.getDate());
 <View style={styles.container}> 
  
  
-<SubHeadericon name="arrow-left" des="Profile Setting" navigation={navigation}/>
-  <View  style={styles.loginbox}>       
+<SubHeadericon name="arrow-left" des="Basic Info" navigation={navigation}/>
+  <View  style={styles.loginbox}>    
 
+  <Avatar
+              size={64}
+              rounded
+              source={uri ? {uri} :null}
+              icon={{ name: 'user', type: 'font-awesome' }}
+              containerStyle={{ backgroundColor: 'green',width:90,height:90,borderRadius:100,alignSelf:'center' }} 
+             
+            avatarStyle={{width:90,height:90,borderRadius:90}} >
+              {/* <Avatar.Accessory size={23}   onPress={pickPicture}/> */}
+            </Avatar>
+            <Button
+                title="Add a photo"
+                buttonStyle={{alignSelf:'center', marginTop:10,borderColor:'green',borderWidth:2,backgroundColor:'transparent',width:150, borderRadius:100 }}
+                containerStyle={{
+                    borderRadius:100
+                }}
+                titleStyle={{ color: 'green',  }}
+                onPress={pickPicture}  />
   {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -132,20 +165,15 @@ console.log(date.getDate());
         value={values.finalPoint}
         keyboardType="default"
        />
-       <Input
-    placeholder={'Home Town'}
-        leftIcon={{ type: 'font-awesome', name: 'building-o' }}
-        leftIconContainerStyle={{color:'red'}}
-        onChangeText={value => this.setState({ comment: value })}
-        onChangeText={handleChange('finalPoint')}
-        onBlur={handleBlur('finalPoint')}
-        value={values.finalPoint}
-        keyboardType="default"
-       />
+
       
-       <Button
+     </>
+   )}
+ </Formik>
+            </View>
+            <Button
                 title="Save"
-                buttonStyle={{ marginTop:100, backgroundColor: 'green',height:55,width:'100%' }}
+                buttonStyle={{ margin:15, backgroundColor: 'green',height:50, }}
                 containerStyle={{
                     
                 //   width: 200,
@@ -155,13 +183,8 @@ console.log(date.getDate());
                 titleStyle={{ color: 'white',  }}
                 onPress={() =>{  navigation.goBack()}} 
                // disabled={!isValid || isSubmitting}
-                loading={isSubmitting}
-      />
-      
-     </>
-   )}
- </Formik>
-            </View>                         
+                // loading={isSubmitting}
+      />                         
           </View>
 </ScrollView>
 </SafeAreaView>
@@ -169,7 +192,7 @@ console.log(date.getDate());
   )
 }
 
-export default EditProfile;
+export default BasicInfo;
 const styles = StyleSheet.create({
     container: {
   
@@ -178,7 +201,7 @@ const styles = StyleSheet.create({
       height:height
     
     },
-    loginbox:{marginTop:10,padding:15,marginBottom:50},
+    loginbox:{marginTop:10,padding:15,margin:12,backgroundColor:'white',borderRadius:8},
   
     
    

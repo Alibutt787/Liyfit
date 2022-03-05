@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View ,SafeAreaView,ScrollView,Image,Dimensions,Modal,Pressable} from 'react-native'
+import { StyleSheet, Text, View ,SafeAreaView,ScrollView,Image,Dimensions,Alert} from 'react-native'
 import React,{useState} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -8,7 +8,6 @@ const ViewProfilePhoto = ({route,navigation}) => {
   const win = Dimensions.get('window')
   console.log('hy',route.params.uri.uri);
   const uri =route.params.uri.uri;
-  const [modalVisible, setModalVisible] = useState(false);
   return (
     <SafeAreaView >
     <ScrollView>
@@ -18,7 +17,22 @@ const ViewProfilePhoto = ({route,navigation}) => {
      <View style={{flexDirection:'row',backgroundColor:'white'}}>
     <Icon name="arrow-left" size={25} color="black"      onPress={()=>{navigation.goBack()}} style={{paddingTop:20,paddingLeft:15,paddingRight:20}}/>
     <Text style={{padding:15,marginLeft:'0%',marginTop:9,fontSize:22,color:'black'}}>Photo</Text>
-    <Icon name="trash" size={25}  color='red'     onPress={()=>{setModalVisible(true)}} style={{position:'absolute',bottom:13,right:18}}/>
+    <Icon name="trash" size={25}  color='red'     
+       onPress={()=>Alert.alert(
+        "Delete",
+        "Are you want to delete the photo?",
+        [
+        
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "confirm", onPress: () => navigation.goBack() }
+        ]
+      )}
+    
+    style={{position:'absolute',bottom:13,right:18}}/>
    
     </View>
 
@@ -38,37 +52,7 @@ const ViewProfilePhoto = ({route,navigation}) => {
           source={uri ? {uri} :null}
         /> 
         
-        <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      ><View style={styles.centeredView}>
-      <View style={styles.modalView}>
-        <Text >Are u sure u want to delete the Profile photo</Text>
-       <View style={{flexDirection:'row',marginTop:30}}>
-       <Pressable
-          style={[styles.button, styles.buttonClose]}
-          onPress={() => setModalVisible(!modalVisible)}
-        >
-          <Text style={styles.textStyle}>cancel</Text>
-        </Pressable>
-    
-        <Pressable
-          style={[styles.button, styles.buttonClose]}
-          // onPress={() => navigation.goBack()} EditProfile
-          onPress={() => navigation.goBack()} 
-        >
-          <Text style={styles.textStyle}>Delete</Text>
-        </Pressable>
-       </View>
-       
-      </View>
-    </View>
-  </Modal>
+
     </View>
     </View>
     </ScrollView>

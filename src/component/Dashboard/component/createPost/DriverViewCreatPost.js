@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View,TouchableOpacity,Dimensions,ScrollView ,Image} from 'react-native'
 import React from 'react'
 import { Button} from 'react-native-elements';
+import SubHeadericon from '../../../CustomComponent/SubHeadericon';
 const { width, height } = Dimensions.get('window');
 const DriverViewCreatPost = ({navigation}) => {
   const objectOfPost={ date:new Date().toDateString(),time:new Date().toTimeString(),startCity:'jhelum',endCity:'Lahore', status:'Pending'}
@@ -8,36 +9,11 @@ const DriverViewCreatPost = ({navigation}) => {
   return (
     <ScrollView>
     <View>
-    <View style={{flexDirection:'row',backgroundColor:"white"}}>
-        <Button
-                icon={{
-                  name: 'arrow-left',
-                  type: 'font-awesome',
-                  size: 20,
-                  color: 'black'}}
-                iconLeft
-                iconContainerStyle={{ color:'black',  }}
-                buttonStyle={{
-                backgroundColor: 'white',
-                marginTop:12,
-                width:70,
-                height:55, 
-               }}
-                containerStyle={{
-             
-                  marginHorizontal: 0,
-                  marginVertical: 0,
-                }}
-                onPress={() => navigation.goBack()} 
-              />
-             
-
-<Text style={{padding:15,marginLeft:'0%',marginTop:9,fontSize:22,color:'black'}}>View Post</Text>
-</View>
+<SubHeadericon  name="arrow-left" des="Attract People" navigation={navigation}/>
 
       <View >
         <Image
-          source={require('../../../../assets/Liyfit.png')}
+          source={require('../../../assets/getstarted.jpg')}
           resizeMode="cover"
           style={{width:width,height:height/3}}
         />
@@ -62,7 +38,7 @@ const DriverViewCreatPost = ({navigation}) => {
             backgroundColor: 'grey',
           
            }}
-          onPress={() =>{  navigation.navigate('PostSignin')}}
+          onPress={() =>{  navigation.navigate('AttractPeople')}}
           />
           <Text>   </Text>
            <Button
@@ -73,7 +49,7 @@ const DriverViewCreatPost = ({navigation}) => {
             backgroundColor: 'red',
           
            }}
-          onPress={() =>{  navigation.navigate('PostSignin')}}
+          // onPress={() =>{  navigation.navigate('PostSignin')}}
           />
      </View>
       </View>

@@ -4,12 +4,16 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawer from '../Drawer/customDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMat from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from '../Welcome/Home';
-import CreatePostNav from '../component/createPost/CreatePostNav';
-import BookingHistory from '../component/Booking/BookingHistory';
-import Message from '../component/message/Message'
 import ProfileNavigation from '../component/profile/ProfileNavigation';
 import SearchNavigation from '../component/search/SearchNavigation';
+import BookingHistory from '../component/BookingHistory/BookingHistory';
+import BookedRide from '../BookedRide/BookedRide';
+import AttractPeople from '../component/AttractPeople/AttractPeople';
+import DriverPostHome from '../ViewDriverPost/DriverPostHome';
+import OnlineRegistrationNav from '../component/online registration/OnlinegistrationNav';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,7 +23,7 @@ export default function StackDrawer() {
   const hy = useState(false);
 
   return (
-   
+  
 <Drawer.Navigator
       drawerContent={props => <CustomDrawer {...props} hy={hy}/>}
       screenOptions={{
@@ -50,47 +54,65 @@ export default function StackDrawer() {
         }}
       />
       { hy[0] ?
-       <Drawer.Screen
-      name="Create Ride Post"
-      component={CreatePostNav}
+       (<Drawer.Screen
+      name="Attract"
+      component={AttractPeople}
       options={{
         drawerIcon: ({color}) => (
-          <Ionicons name="create" size={22} color={color} />
+          <IconMat name="post-add" size={22} color={color} />
+         
         ),
       }}
-    />:<></>}
-        <Drawer.Screen
-        name="Search Ride"
-        component={SearchNavigation}
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="search" size={22} color={color} />
-     
-          ),
-        }}
-      /> 
-        <Drawer.Screen
-      name="Chat"
-      component={Message}
+    />    ):<Drawer.Screen
+    name="Profile"
+    component={ProfileNavigation}
+    options={{
+      drawerIcon: ({color}) => (
+        <Icon name="user" size={22} color={color} />
+ 
+      ),
+    }}
+  />}
+      { hy[0] ?
+       (<Drawer.Screen
+      name="View Rides"
+      component={DriverPostHome}
       options={{
         drawerIcon: ({color}) => (
-          <Icon name="sms" size={22} color={color} />
-   
+          // <Ionicons name="create" size={22} color={color} />
+          <MatIcon name="eye" size={22} color={color} />
         ),
       }}
-    /> 
-
-<Drawer.Screen
-      name="Profile"
-      component={ProfileNavigation}
+    />    ):<></>}
+       { hy[0] ?
+       (<Drawer.Screen
+      name="Online Registration"
+      component={OnlineRegistrationNav}
       options={{
         drawerIcon: ({color}) => (
-          <Icon name="user" size={22} color={color} />
-   
+          <Icon name="globe" size={22} color={color} />
         ),
       }}
-    /> 
-       <Drawer.Screen
+    />    ):   <Drawer.Screen
+    name="Search Ride"
+    component={SearchNavigation}
+    options={{
+      drawerIcon: ({color}) => (
+        <Ionicons name="search" size={22} color={color} />
+ 
+      ),
+    }}
+  />}
+      
+       {hy[0]? <Drawer.Screen
+       name="Booked Ride"
+       component={BookedRide}
+       options={{
+         drawerIcon: ({color}) => (
+           <MatIcon name="seat-recline-extra" size={22} color={color} />
+         ),
+       }}
+     />:<Drawer.Screen
       name="Ride history"
       component={BookingHistory}
       options={{
@@ -98,7 +120,8 @@ export default function StackDrawer() {
           <Icon name="clock" size={22} color={color} />
         ),
       }}
-    />  
+    /> }
+         
      
       </Drawer.Navigator>
 

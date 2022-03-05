@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Modal, 
          View, TextInput, Dimensions ,Text} from "react-native";
 import { Button} from 'react-native-elements';
+import Headericon from "../../../CustomComponent/Headericon";
 
 
 const { width } = Dimensions.get("window");
@@ -23,34 +24,8 @@ export default function BookingHistory({navigation}) {
     return (
         <SafeAreaView >
          {/* open drawer button */}
-          <View style={{flexDirection:'row',backgroundColor:'white'}}>
-        <Button
-                icon={{
-                  name: 'arrow-left',
-                  type: 'font-awesome',
-                  size: 20,
-                  color: 'black'}}
-                iconLeft
-                iconContainerStyle={{ color:'black',  }}
-                buttonStyle={{
-                backgroundColor: 'white',
-                width:70,
-                height:55, 
-                backgroundColor:'white',
-               
-               
-                }}
-                containerStyle={{
-             
-                  marginHorizontal: 0,
-                  marginVertical: 0,
-                }}
-                onPress={()=>{navigation.openDrawer()}}
-              />
-             
-
-<Text style={{padding:18,marginLeft:'10%',fontSize:20}}>Ride History</Text>
-</View>
+         
+<Headericon name="bars" des="Ride history" navigation={navigation}/>
       
             {/**  We are going to create a Modal with Text Input. */}
             <Text style={{margin:90,textAlign:'center'}}>Booking MGT History</Text>
