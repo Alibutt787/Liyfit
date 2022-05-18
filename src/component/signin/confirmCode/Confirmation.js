@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet,Keyboard} from 'react-native';
 import {Button} from 'react-native-elements';
 import useTimer from './useTime';
+import RNOtpVerify from 'react-native-otp-verify';
 import {
   CodeField,
   Cursor,
@@ -9,13 +10,13 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import Loading from '../../CustomComponent/Loading';
+import { useDispatch ,useSelector} from 'react-redux';
+import {userr,term} from '../../Redux/UserReducer'
 // number of verification cell
 const CELL_COUNT = 6;
-
-const Confim = ({route, navigation}) => {
-
-    //custom hook of time
+const Confim = ({confirmationToken, number,navigation}) => {
+  //custom hook of time
     const [minutes, seconds] = useTimer();
   //value of the verification code
   const [value, setValue] = useState('');
@@ -24,23 +25,68 @@ const Confim = ({route, navigation}) => {
     value,
     setValue,
   });
-  const {number, confirm} = route.params;
+  const [isLoading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  dispatch(term(true));
+  //confirm function
+  async function confirmCode(code) { 
+  confirmationToken?.confirm(code).then((result) => {
+    setLoading(false);
+    // const userDocument = firestore().collection('Users').doc(number);
+    // User signed in successfully.
+//     const usersCollection = firestore().collection('Users');
+//     const userDocument =  firestore()
+// .collection('Users')
+// .add({
+//   number: number,
+// })
+// .then(() => {
+//   console.log('User added!');
+// });
+  }).catch((error) => {
+    console.log(error);
+  });
+  
+} 
+  useEffect(() => {
+    RNOtpVerify.getOtp()
+        .then((p) => {
+            RNOtpVerify.addListener((message) => {
+               
+                    if (!!message && message !== 'Timeout Error') {
+                        const otp = /(\d{6})/g.exec(message)[1];
+                        if (otp.length === 6) {
+                            setValue(otp); 
+                            RNOtpVerify.removeListener();
+                            Keyboard.dismiss();
+                            
+                        }
+                    } else {
+                        alert( 'OTPVerification: RNOtpVerify.getOtp - message=>', message );
+                    }
+               
+            });
+        })
+        .catch((error) => {
+            alert(error);
+        })
+        return () => {
+          RNOtpVerify.removeListener();
+          // removeOtpListener();
+      };
+  }, []);
 
-  //propos that snd from number enter screen
-  // function of the confirmation
-  async function confirmCode(code) {
-    console.log('confir',confirm);
-    try {
-     //  await confirm.confirm(code);
-      alert('Register Successfully');
-    } catch (error) {
-      alert('Error');
-    }
-  }
+  useEffect(() => {
+ if(value.length==6){  
+  setLoading(true); 
+  confirmCode(value);
 
+ }
+});
+ 
   return (
     <View>
-      <Icon
+       <Icon
         name="arrow-back"
         size={30}
         color="black"
@@ -53,7 +99,7 @@ const Confim = ({route, navigation}) => {
           style={{
             fontSize: 18,
             fontWeight: 'bold',
-            marginBottom: 15,
+            marginBottom: '20%',
             marginTop: 0,
           }}>
           Enter the 4-digit code sent to you at 0{number}.
@@ -93,12 +139,12 @@ const Confim = ({route, navigation}) => {
               title="Verify"
               buttonStyle={{backgroundColor: 'rgba(39, 39, 39, 1)', height: 50}}
               containerStyle={{
-                marginTop: 30,
+                marginTop: '25%',
                 marginBottom: 20,
               }}
               disabled={value.length === 6 ? false : true}
               titleStyle={{color: 'white'}}
-              onPress={() => { confirmCode(value),navigation.navigate('NameSc')}}
+              onPress={() => { confirmCode(value)}}
             />
           </View>
         )}
@@ -117,6 +163,7 @@ const Confim = ({route, navigation}) => {
           Resend Code
         </Text>
       </View>
+      {isLoading?<Loading />:<></>}
     </View>
   );
 };
@@ -152,7 +199,7 @@ const styles = StyleSheet.create({
     height: 40,
     lineHeight: 38,
     fontSize: 24,
-    borderWidth: 2,
+    borderBottomWidth: 4,
     borderColor: '#00000030',
     textAlign: 'center',
   },

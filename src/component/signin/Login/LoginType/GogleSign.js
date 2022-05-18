@@ -6,6 +6,7 @@ import {
     GoogleSigninButton,
     statusCodes,} from '@react-native-google-signin/google-signin';
 export const GogleSign = ({navigation}) => {
+  
   GoogleSignin.configure({
     scopes: ['https://www.googleapis.com/auth/drive.readonly'], 
     webClientId: '854119119098-k3hvs9gf47e4ugnbc9cmrmce3v2mb3fv.apps.googleusercontent.com',
@@ -21,14 +22,13 @@ export const GogleSign = ({navigation}) => {
   });
   GoogleSignin.configure();
   async  function _signIn (){
-    navigation.navigate('TermConditions')
     try {
-    //  const hy = await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true }); // <-- Add this
-    //  const idToken = await GoogleSignin.signIn();
-    //  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    //   console.log('Goggle',googleCredential);
-    //   console.log('idToken',idToken);
-    //   return auth().signInWithCredential(googleCredential);
+    // await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true }); // <-- Add this
+     const idToken = await GoogleSignin.signIn();
+     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      console.log('Goggle',googleCredential);
+      console.log('idToken',idToken);
+      return auth().signInWithCredential(googleCredential);
    
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

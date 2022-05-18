@@ -7,7 +7,6 @@ import {signUpValidationSchema} from './Schema'
 const {width, height} =Dimensions.get('window')
 
 const PostSignup = ({navigation}) => {
-  console.log(width,'pakista',height)
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const [Name, setName] = useState('');
@@ -53,7 +52,7 @@ const PostSignup = ({navigation}) => {
         <Formik
    validationSchema={signUpValidationSchema}
    initialValues={{fullName:'', phoneNumber:'', email:'',password:'', confirmPassword:'' }}
-   onSubmit={values => {console.log(values), navigation.navigate('PostSignin')}}
+   onSubmit={values => {alert(values), navigation.navigate('PostSignin')}}
  >
    {({
      handleChange,
@@ -69,7 +68,7 @@ const PostSignup = ({navigation}) => {
          name="fullName"
          autoFocus={true}
          placeholder="full Name"
-         style={styles.textInput}
+        //  style={styles.textInput}
          onChangeText={handleChange('fullName')}
          onBlur={handleBlur('fullName')}
          value={values.fullName}
@@ -119,7 +118,7 @@ const PostSignup = ({navigation}) => {
 <TextInput  style={{ fontSize: 0, color: 'red' }}
          name="confirmPassword"
          placeholder="confirmPassword"
-         style={styles.textInput}
+        //  style={styles.textInput}
          onChangeText={handleChange('confirmPassword')}
          onBlur={handleBlur('confirmPassword')}
          value={values.confirmPassword}
@@ -135,7 +134,7 @@ const PostSignup = ({navigation}) => {
         disabled={!isValid || isSubmitting}
         loading={isSubmitting}
         title="LOGIN"
-         disabled={!isValid}
+        //  disabled={!isValid}
        />
      </>
    )}

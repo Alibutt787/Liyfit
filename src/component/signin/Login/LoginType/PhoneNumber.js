@@ -5,35 +5,40 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Confim from '../../confirmCode/Confirmation'
 import auth from '@react-native-firebase/auth';
-
-export const PhoneNumber = ({navigation}) => {
+export const LoginNumber = ({navigation}) => {
   //mobile number state
     const [number,setnumber]=useState('');
 //confirm code object state with number
     const [confirm,setConfirm]=useState(null);
+
+    const [isLoading, setLoading] = useState(false);
     //sign in with number function
+
     async function signInWithPhoneNumber(phoneNumber) {
-      navigation.navigate('Confirm', {number: number,confirm: confirm,})
+      setLoading(true)
       try {
-       //  const confirmation = await auth().signInWithPhoneNumber('+92'+phoneNumber);
-        //  setConfirm(confirmation);   
+         const confirmation = await auth().signInWithPhoneNumber('+92'+phoneNumber);
+         setConfirm(confirmation);
+
       } catch (error) {
         setConfirm(error); } }
-        // verify opt code function 
-        async function confirmCode(code) {
-          try {
-            // await confirm.confirm(code);
-            alert('Register Successfully');
-          } catch (error) {
-            alert('Error');
-          }
-        }
+     if(!confirm){
       return (
-        <View>
-     
+        
+        <View  style={{height:400}}>
+      <Icon
+        name="arrow-back"
+        size={30}
+        color="black"
+        style={{marginLeft: 20, marginTop: 25}}
+        onPress={() => navigation.goBack()}
+      />
         <Text style={{ marginTop: 10, marginBottom: 30,
           fontSize: 20,
           width: 300,
@@ -96,7 +101,7 @@ export const PhoneNumber = ({navigation}) => {
                   width: 310,
                   marginLeft: 25,}}
                 titleStyle={{color: 'white', marginHorizontal: 20}}
-                onPress={()=> {signInWithPhoneNumber(number)}}  />
+                onPress={()=> {signInWithPhoneNumber(number) }}  />
        <Text style={styles.textstyle}>
                 By continuing you may receive an SMS for Verification. Message and
                 data rates may apply..
@@ -129,7 +134,19 @@ export const PhoneNumber = ({navigation}) => {
               </View>
       
         </View>
-      );    
+      );    }
+    else  if(!!isLoading){
+        return <View style={{height:200}}><ActivityIndicator/></View>
+      }
+      else if(confirm){ 
+        setLoading(false)
+        // navigation.navigate('confirm')
+        return(
+          <Confim  confirmationToken={confirm} number={number}/>
+                );
+      
+      }
+     
   
 };
 const styles = StyleSheet.create({

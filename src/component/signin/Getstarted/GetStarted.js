@@ -4,33 +4,29 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  Dimensions,
+  Dimensions
 } from 'react-native';
 import {Button} from 'react-native-elements';
-import SVGImg from '../../../assets/undraw_city_driver_re_0x5e (1).svg';
+import SVGImg from '../../../assets/istockphoto-1138578799-170667a (1).svg';
+import UseGetstarted from './UseGetstarted';
 const GetStarted = ({navigation}) => {
-  const {width, height} = Dimensions.get('window');
+  const {width, height} = Dimensions.get('window'); 
+const  [  requestPhonePermission    ]= UseGetstarted();
+requestPhonePermission();
   return (
-    <View style={{flex: 1, alignItems: 'center', backgroundColor: 'white'}}>
-      {/* Name of the app */}
-      <View style={{marginTop: 10}}>
-        <Text style={{padding: 40, fontSize: 35}}>Liyfit</Text>
+      <View style={{flex: 1, alignItems: 'center', backgroundColor: 'white'}}>
+      <View style={{marginTop: 50}}>
+      <Text style={{padding: 20, fontSize: 40}}>Liyfit </Text>
       </View>
-      {/* Picture of the app  */}
       <View style={{height: height / 4}}>
-      <SVGImg width={230} height={250} />
-        {/* <Image
-          style={{width: width - 30, height: 197}}
-          source={require('../../../assets/getstarted.jpg')}
-        /> */}
+      <SVGImg width={width+20} height={290} />
       </View>
       <View style={{marginTop: 70, fontSize: 30}}>
-        <Text style={{fontSize: 30}}>Move with Safety</Text>
+      <Text style={{fontSize: 30}}>Move with Safety</Text>
       </View>
       {/* button of next screen  */}
-      <Button
-        title="Get Started"
+      <Button 
+      title="Get Started"
         icon={{
           name: 'arrow-right',
           type: 'font-awesome',
@@ -54,7 +50,7 @@ const GetStarted = ({navigation}) => {
           marginHorizontal: 50,
           marginVertical: 10,
         }}
-        onPress={() => navigation.navigate('Number', {name: 'Janee'})}
+        onPress={() =>{ navigation.navigate('Number', {name: 'Janee'})}}
       />
     </View>
   );

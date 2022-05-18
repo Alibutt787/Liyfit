@@ -9,7 +9,5 @@ const SubHeadericon = ({name,des,navigation}) => {
 </View>
   )
 }
-
 export default SubHeadericon
-
 const styles = StyleSheet.create({})

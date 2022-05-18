@@ -6,7 +6,7 @@ import DriverViewCreatPost from './DriverViewCreatPost';
 import AttractPeople from '../AttractPeople/AttractPeople';
 const Stack = createNativeStackNavigator();
 
- const CreatedPostNav = () => {
+ const CreatedPostNavn = () => {
   return (
       <Stack.Navigator>
        <Stack.Screen name="PostHome" component={PostHome}  options={{ title: 'Creat Post',headerShown: false }}/>

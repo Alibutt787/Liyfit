@@ -54,7 +54,7 @@ const PostLogin = ({navigation}) => {
     <Formik
    validationSchema={loginValidationSchema}
    initialValues={{ email: '', password: '' }}
-   onSubmit={values => console.log(values)}
+   onSubmit={values => alert(values)}
  >
    {({
      handleChange,
