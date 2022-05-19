@@ -8,8 +8,9 @@ import {Formik} from 'formik';
 import * as yup from 'yup'
 import SubHeadericon from '../../../../CustomComponent/SubHeadericon';
 const {width, height} =Dimensions.get('window')
-
+import {TodoListContext} from '../OnlinegistrationNav'
 const BasicInfo = ({navigation}) => {
+  const { addTodoItem } = React.useContext(TodoListContext);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const onChange = (event, selectedDate) => {
@@ -22,13 +23,19 @@ const BasicInfo = ({navigation}) => {
   };
 
     const createPostSchema = yup.object().shape({
-        initialPoint: yup
+      image : yup
+      .string()
+      .required('Email Address is Required'),
+        fname: yup
        .string()
        .required('Email Address is Required'),
-       finalPoint: yup
+       lname: yup
        .string()
        .required('Email Address is Required'),
-      Description : yup
+      email : yup
+       .string()
+       .required('Email Address is Required'),
+       date : yup
        .string()
        .required('Email Address is Required'),
    
@@ -37,7 +44,7 @@ const BasicInfo = ({navigation}) => {
   function sig() {
    // alert(Password);
   }
-  const [uri, setUri] = useState('');
+  const [uri, setUri] = useState(null);
   const pickPicture = () => {
     ImagePicker.openPicker({
       cropperStatusBarColor: 'black',
@@ -48,6 +55,7 @@ const BasicInfo = ({navigation}) => {
       }).then(image => {
         setUri(image ?.path)
       }).catch(e=>alert('pakistan'))
+
   };
 
 
@@ -59,25 +67,6 @@ const BasicInfo = ({navigation}) => {
  
 <SubHeadericon name="arrow-left" des="Basic Info" navigation={navigation}/>
   <View  style={styles.loginbox}>    
-
-  <Avatar
-              size={64}
-              rounded
-              source={uri ? {uri} :null}
-              icon={{ name: 'user', type: 'font-awesome' }}
-              containerStyle={{ backgroundColor: 'green',width:90,height:90,borderRadius:100,alignSelf:'center' }} 
-             
-            avatarStyle={{width:90,height:90,borderRadius:90}} >
-              {/* <Avatar.Accessory size={23}   onPress={pickPicture}/> */}
-            </Avatar>
-            <Button
-                title="Add a photo"
-                buttonStyle={{alignSelf:'center', marginTop:10,borderColor:'green',borderWidth:2,backgroundColor:'transparent',width:150, borderRadius:100 }}
-                containerStyle={{
-                    borderRadius:100
-                }}
-                titleStyle={{ color: 'green',  }}
-                onPress={pickPicture}  />
   {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -94,47 +83,74 @@ const BasicInfo = ({navigation}) => {
 
 <Formik
    validationSchema={createPostSchema}
-   initialValues={{ initialPoint: '', finalPoint: '', Description:'' }}
+   initialValues={{ fname: '', lname: '', email:'',image:'',date:'' }}
    onSubmit={values => alert(values)}
  >
    {({
      handleChange,
      handleBlur,
      handleSubmit,
+     setFieldValue,
      isSubmitting,
      values,
      errors,
      isValid,
    }) => (
      <>
-    
+      <Avatar
+              size={64}
+              rounded
+              source={uri ? {uri} :null}
+              icon={{ name: 'user', type: 'font-awesome' }}
+              containerStyle={{ backgroundColor: 'green',width:90,height:90,borderRadius:100,alignSelf:'center' }} 
+            avatarStyle={{width:90,height:90,borderRadius:90}} >
+              <Avatar.Accessory size={23}  
+             
+              onPress={()=>{
+                ImagePicker.openPicker({
+                  cropperStatusBarColor: 'black',
+                  cropping: true,
+                  mediaType: 'photo',
+                  showCropFrame: true,
+                  showCropGuidelines: true,
+                  }).then(image => {
+                    setUri(image ?.path)
+                    setFieldValue('image',image ?.path );
+                  }).catch(e=>alert('No Picture has been choosen'))
+               
+              }}/>
+            </Avatar>
+           
+       {errors.image &&
+         <Text style={{ fontSize: 10, color: 'red' }}>{errors.image}</Text>}
+
+
 <Input style={{marginTop:30}}
     leftIcon={{ type: 'font-awesome', name: 'user' }}
     // inputContainerStyle={style.InputContainerStyle}
     leftIconContainerStyle={{color:'grey',marginTop:30}}
     placeholder={"first Name"}
     underlineColorAndroid={'transparent'}
-    onChangeText={handleChange('initialPoint')}
-    onBlur={handleBlur('initialPoint')}
-    value={values.initialPoint}
+    onChangeText={handleChange('fname')}
+    onBlur={handleBlur('fname')}
+    value={values.fname}
     keyboardType="default"
   /> 
-       {errors.initialPoint &&
-         <Text style={{ fontSize: 10, color: 'red' }}>{errors.initialPoint}</Text>}
+       {errors.fname &&
+         <Text style={{ fontSize: 10, color: 'red' }}>{errors.fname}</Text>}
     
     <Input
         leftIcon={{ type: 'font-awesome', name: 'user' }}
         leftIconContainerStyle={{color:'red'}}
-        onChangeText={value => this.setState({ comment: value })}
         placeholder={"Last Name"}
-        // onChangeText={handleChange('finalPoint')}
-        onBlur={handleBlur('finalPoint')}
-        value={values.finalPoint}
+        onChangeText={handleChange('lname')}
+        onBlur={handleBlur('lname')}
+        value={values.lname}
         keyboardType="default"
        
        />
-       {errors.finalPoint &&
-         <Text style={{ fontSize: 10, color: 'red' }}>{errors.finalPoint}</Text>
+       {errors.lname &&
+         <Text style={{ fontSize: 10, color: 'red' }}>{errors.lname}</Text>
        }
        <TouchableOpacity 
        
@@ -145,9 +161,10 @@ const BasicInfo = ({navigation}) => {
     placeholder={date.toLocaleDateString()}
         leftIcon={{ type: 'font-awesome', name: 'calendar' }}
         leftIconContainerStyle={{color:'red'}}
-        onChangeText={value => this.setState({ comment: value })}
+        // setFieldValue('image',image ?.path );
+        // onChangeText={value => this.setState({ comment: value })}
         // onChangeText={handleChange('finalPoint')}
-        onBlur={handleBlur('finalPoint')}
+        // onBlur={handleBlur('finalPoint')}
      //   value={values.finalPoint}
         keyboardType="default"
        />
@@ -156,32 +173,32 @@ const BasicInfo = ({navigation}) => {
     placeholder={'Email'}
         leftIcon={{ type: 'Fontisto', name: 'email' }}
         leftIconContainerStyle={{color:'red'}}
-        onChangeText={value => this.setState({ comment: value })}
-        // onChangeText={handleChange('finalPoint')}
-        onBlur={handleBlur('finalPoint')}
-        value={values.finalPoint}
+        onChangeText={handleChange('email')}
+        onBlur={handleBlur('email')}
+        value={values.email}
         keyboardType="default"
        />
-
+          {errors.email &&
+         <Text style={{ fontSize: 10, color: 'red' }}>{errors.email}</Text>}
+   <Button
+                title="Save"
+                buttonStyle={{ margin:15, backgroundColor: 'green',height:50, }}
+                containerStyle={{         
+                //   width: 200,
+                //   marginHorizontal: 50,
+                //   marginVertical: 10,
+                }}
+                titleStyle={{ color: 'white' }}
+                onPress={handleSubmit} 
+                disabled={!isValid || isSubmitting}
+                // loading={isSubmitting}
+      />   
       
      </>
    )}
  </Formik>
             </View>
-            <Button
-                title="Save"
-                buttonStyle={{ margin:15, backgroundColor: 'green',height:50, }}
-                containerStyle={{
-                    
-                //   width: 200,
-                //   marginHorizontal: 50,
-                //   marginVertical: 10,
-                }}
-                titleStyle={{ color: 'white',  }}
-                onPress={() =>{  navigation.goBack()}} 
-               // disabled={!isValid || isSubmitting}
-                // loading={isSubmitting}
-      />                         
+                               
           </View>
 </ScrollView>
 </SafeAreaView>

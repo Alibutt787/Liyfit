@@ -50,7 +50,7 @@ requestPhonePermission();
           marginHorizontal: 50,
           marginVertical: 10,
         }}
-        onPress={() =>{ navigation.navigate('Number', {name: 'Janee'})}}
+        onPress={() =>{ navigation.navigate('Number')}}
       />
     </View>
   );

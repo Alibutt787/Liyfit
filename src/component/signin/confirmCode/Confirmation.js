@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet,Keyboard} from 'react-native';
+import {View, Text, StyleSheet,Keyboard,Alert} from 'react-native';
 import {Button} from 'react-native-elements';
 import useTimer from './useTime';
 import RNOtpVerify from 'react-native-otp-verify';
@@ -44,7 +44,7 @@ const Confim = ({confirmationToken, number,navigation}) => {
 //   console.log('User added!');
 // });
   }).catch((error) => {
-    console.log(error);
+    Alert('Wrong Opt used',error);
   });
   
 } 

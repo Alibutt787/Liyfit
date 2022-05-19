@@ -93,7 +93,7 @@ const TermConditions = ({navigation}) => {
               disabled={!check1}
               titleStyle={{color: 'white'}}
             //  onPress={handleSubmit}
-               onPress={() => { navigation.navigate('WelcomeHomeScreen')}}
+               onPress={() => { navigation.navigate('WelcomeHomeScr')}}
             />
    
       </View>

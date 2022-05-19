@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View,TouchableOpacity} from 'react-native'
-import React from 'react'
-import Headericon from '../../../CustomComponent/Headericon'
+import { StyleSheet, Text, View,TouchableOpacity, Alert} from 'react-native';
+import React from 'react';
+import Headericon from '../../../CustomComponent/Headericon';
 import {Input,Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+
+
 const OnlineRegistration = ({navigation}) => {
   return (
-    <View>
-      
+    <View>    
 <Headericon name="bars" des="Driver Registration" navigation={navigation}/>
   <View style={styles.card}>
   <TouchableOpacity       onPress={()=>{navigation.navigate('BasicInfo')}}>
@@ -15,28 +16,24 @@ const OnlineRegistration = ({navigation}) => {
   <Icon name='chevron-right' size={25} color="green"  />
   </View>
   </TouchableOpacity>
-
   <TouchableOpacity      onPress={()=>{navigation.navigate('License')}}>
   <View  style={styles.Item}>
  <Text style={styles.size}>Driver License</Text>
   <Icon name='chevron-right' size={25} color="green"  />
   </View>
   </TouchableOpacity>
-
   <TouchableOpacity       onPress={()=>{navigation.navigate('Idconfirm')}}>
   <View  style={styles.Item}>
  <Text style={styles.size}>ID Confirmation</Text>
   <Icon name='chevron-right' size={25} color="green"  />
   </View>
   </TouchableOpacity>
-
   <TouchableOpacity       onPress={()=>{navigation.navigate('Cnic')}}>
   <View  style={styles.Item}>
  <Text style={styles.size}>CNIC</Text>
   <Icon name='chevron-right' size={25} color="green"  />
   </View>
   </TouchableOpacity>
-
   <TouchableOpacity       onPress={()=>{navigation.navigate('VehicleNav')}}>
   <View  style={styles.ItemLast}>
  <Text style={styles.size}>Vehicle Info</Text>
@@ -45,21 +42,26 @@ const OnlineRegistration = ({navigation}) => {
   </TouchableOpacity>
   </View>
   <Button
-  disabled
                   title="Done"
                   buttonStyle={{height:60,width:'100%',borderRadius:200,backgroundColor:'green' }}
                   containerStyle={{    margin:10,paddingBottom:2,}}
                   titleStyle={{ color: 'white',  }}
-                  onPress={() =>{  navigation.navigate('EditProfile')}} 
-                 // disabled={!isValid || isSubmitting}
-                  // loading={isSubmitting}
+                  onPress={() => Alert.alert('save Data Susscessfully')} 
         /> 
         <View style={{justifyContent:'center',alignItems:'center',marginLeft:25,marginRight:23}}>
-          <Text style={{fontSize:12,fontFamily:'serif'}}>By tapping "submit" Iagree with <Text style={styles.Link}>Term and conditions</Text>, I acknowledge and agree with processing and transfer of personal data according to conditions of 
-          <Text style={styles.Link}> Privacy Policy,</Text>
+         <Text style={{fontSize:12,fontFamily:'serif'}} 
+         >By tapping "submit" Iagree with 
+          <TouchableOpacity  
+           onPress={()=>navigation.navigate('DriverTermsConditionPage')}>
+         <Text style={styles.Link}>Term and conditions</Text>
+         </TouchableOpacity>,
+          I acknowledge and agree with processing and transfer of personal data according to conditions of   
+          <TouchableOpacity  
+           onPress={()=>navigation.navigate('DriverTermsConditionPage')}>
+         <Text style={styles.Link}> Privacy Policy,</Text>
+         </TouchableOpacity>
           </Text>
         </View>
-   
     </View>
   )
 }
@@ -82,5 +84,7 @@ const styles = StyleSheet.create({
   Item:{flexDirection:'row',justifyContent:"space-between",alignItems:'center',borderBottomColor:'grey',borderBottomWidth:2,padding:20}
   ,ItemLast:{flexDirection:'row',justifyContent:"space-between",alignItems:'center',padding:20}
 , size:{fontSize:20,fontFamily:'serif'},
-Link:{color:'green',textDecorationLine:'underline'}
+Link:{color:'green',textDecorationLine:'underline',fontSize:12
+,fontFamily:'serif'
+}
 })

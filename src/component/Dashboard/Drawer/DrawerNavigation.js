@@ -14,24 +14,26 @@ export const DrawerNavigation = () => {
 
   const Postdata = useSelector((state) => state.userExist);
   const auth=Postdata.AuthTerms;
-  
 
 return (<>
+ <NavigationContainer>
     {auth ? 
-          <NavigationContainer>     
-          <Stack.Navigator>
-          <Stack.Screen name="WelcomeHomeScreen" component={StackDrawer}  options={{ title: 'Welcome',headerShown: false }}/> 
-           </Stack.Navigator>  
-            </NavigationContainer> :
-     <NavigationContainer>
+    
      <Stack.Navigator>
         <Stack.Screen name="NameSc" component={NameSc}  options={{ title: 'Welcome',headerShown: false }}/>
         <Stack.Screen name="TermConditions" component={TermConditions}  options={{ title: 'Welcome',headerShown: false }}/>
         <Stack.Screen name="TermsConditionPage" component={TermsConditionPage}  options={{ title: 'Welcome',headerShown: false }}/>
-         </Stack.Navigator> </NavigationContainer>
-   
+     <Stack.Screen name="WelcomeHomeScr" component={StackDrawer}  options={{ title: 'Welcome',headerShown: false }}/> 
+        
+         </Stack.Navigator> : 
+           
+     <Stack.Navigator>
+     <Stack.Screen name="WelcomeHomeScreen" component={StackDrawer}  options={{ title: 'Welcome',headerShown: false }}/> 
+      </Stack.Navigator>  
+     
     
-           } 
+           }  
+           </NavigationContainer> 
  </> );
 };
 

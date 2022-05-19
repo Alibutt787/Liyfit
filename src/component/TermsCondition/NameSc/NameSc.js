@@ -25,15 +25,9 @@ const NameSc = ({navigation}) => {
       })
   return (
     <View>
-      <Icon
-        name="arrow-back"
-        size={30}
-        color="black"
-        style={{marginLeft: 20, marginTop: 25}}
-        onPress={() => navigation.goBack()}
-      /> 
+   
       {/* text of confirmation code sent */}
-      <View style={{paddingLeft: 30, paddingRight: 30, marginTop: 35}}>
+      <View style={{paddingLeft: 30, paddingRight: 30, marginTop: 75}}>
         <Text
           style={{
             fontSize: 22,

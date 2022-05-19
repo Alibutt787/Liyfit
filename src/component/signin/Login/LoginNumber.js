@@ -16,7 +16,7 @@ import DeviceInfo from 'react-native-device-info';
 import {NameValidationSchema} from './Schema'
 import { Formik } from 'formik'
 export  const LoginNumber = ({navigation}) => {
-  
+
   //mobile number state
   const [value,setvalue]=useState('');
 
@@ -34,6 +34,7 @@ export  const LoginNumber = ({navigation}) => {
   //   })  
      const [number,setnumber]=useState(value);
      async function signInWithPhoneNumber(phoneNumber) {
+    
       Keyboard.dismiss();
       setLoading(true);
       try {
@@ -44,7 +45,7 @@ export  const LoginNumber = ({navigation}) => {
       
 
       } catch (error) {
-      alert(error); 
+      alert('check your Internet',error); 
       setLoading(false);           
       } }
 
@@ -75,7 +76,7 @@ if(!confirm){
       <Formik
    validationSchema={NameValidationSchema}
    initialValues={{ PHONENUMBER:''}}
-   onSubmit={values =>{setnumber(values.PHONENUMBER),console.log(values),signInWithPhoneNumber(number)}}
+   onSubmit={values =>{setnumber(values.PHONENUMBER),signInWithPhoneNumber(number)}}
  >
    {({
      handleChange,

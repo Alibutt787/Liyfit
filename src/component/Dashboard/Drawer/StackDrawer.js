@@ -20,6 +20,7 @@ import DriverProfileNavigation from '../Driver/DriverProfile/ProfileNavigation';
 const Drawer = createDrawerNavigator();
 export default function StackDrawer() {
   const hy = useState(false);
+  const [DriverRegistration,setDriverRegistration] = useState(false);
   return (
     <Drawer.Navigator 
     drawerContent={props => <CustomDrawer {...props} hy={hy} />}
@@ -36,6 +37,63 @@ export default function StackDrawer() {
       },
     }}
     >
+      
+        {hy[0] ?
+   
+<Drawer.Group>
+     
+        {DriverRegistration ? <Drawer.Group>
+          <Drawer.Screen
+          name="Attract"
+          component={AttractPeople}
+          options={{
+            drawerIcon: ({ color,size }) => (
+              <IconMat name="post-add" size={size} color={color} />
+
+            ),
+          }}
+        />
+        
+          <Drawer.Screen
+          name="View Ridesss"
+          component={DriverPostHome}
+          options={{
+            drawerIcon: ({ color ,size}) => (
+              // <Ionicons name="create" size={22} color={color} />
+              <MatIcon name="eye" size={size} color={color} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Driver Prrofile"
+          component={DriverProfileNavigation}
+          options={{
+            drawerIcon: ({ color ,size}) => (
+              <IconMat name="post-add" size={size} color={color} />
+            ),
+          }}
+        />
+       <Drawer.Screen
+        name="Booked Ride info"
+        component={DriverBookingHistory}
+        options={{
+          drawerIcon: ({ color,size }) => (
+            <Ionicons name="ios-bookmarks-outline" size={size} color={color} />
+          ),
+        }}
+      />
+        </Drawer.Group>  :   <Drawer.Screen
+          name="Online Registration"
+          component={OnlineRegistrationNav}
+          options={{
+            drawerIcon: ({ color ,size}) => (
+              <Icon name="globe" size={size} color={color} />
+            ),
+          }}
+        />}
+    </Drawer.Group>
+    :
+    <Drawer.Group>
        <Drawer.Screen
         name="Home"
         component={HomeScreen}
@@ -66,61 +124,6 @@ export default function StackDrawer() {
             />)
         }}
       />
-        {hy[0] ?
-   
-<Drawer.Group>
-
-<Drawer.Screen
-          name="Driver Prrofile"
-          component={DriverProfileNavigation}
-          options={{
-            drawerIcon: ({ color ,size}) => (
-              <IconMat name="post-add" size={size} color={color} />
-            ),
-          }}
-        />
-       <Drawer.Screen
-          name="Attract"
-          component={AttractPeople}
-          options={{
-            drawerIcon: ({ color,size }) => (
-              <IconMat name="post-add" size={size} color={color} />
-
-            ),
-          }}
-        />
-       <Drawer.Screen
-          name="View Ridesss"
-          component={DriverPostHome}
-          options={{
-            drawerIcon: ({ color ,size}) => (
-              // <Ionicons name="create" size={22} color={color} />
-              <MatIcon name="eye" size={size} color={color} />
-            ),
-          }}
-        />
-       <Drawer.Screen
-          name="Online Registration"
-          component={OnlineRegistrationNav}
-          options={{
-            drawerIcon: ({ color ,size}) => (
-              <Icon name="globe" size={size} color={color} />
-            ),
-          }}
-        />
-       <Drawer.Screen
-        name="Booked Ride info"
-        component={DriverBookingHistory}
-        options={{
-          drawerIcon: ({ color,size }) => (
-            <Ionicons name="ios-bookmarks-outline" size={size} color={color} />
-          ),
-        }}
-      />
-    </Drawer.Group>
-    :
-
-    <Drawer.Group>
    
   <Drawer.Screen
          name="setting"
