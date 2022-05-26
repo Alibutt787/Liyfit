@@ -1,69 +1,76 @@
-import React,{useState,useRef} from 'react'
-import { StyleSheet, TextInput,Text,InputText, View,Dimensions,ScrollView,SafeAreaView,TouchableHighlight,Button, TouchableOpacity } from 'react-native'
+import React,{useState} from 'react';
+import { StyleSheet, TextInput,Text,
+View,Dimensions,ScrollView,SafeAreaView, TouchableOpacity,ActivityIndicator,Alert } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Input} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/EvilIcons';
-import {Field, Formik,useField, useFormikContext} from 'formik';
-import {createPostSchema} from './Schema'
+import {Input,Button} from 'react-native-elements';
+import {Formik} from 'formik';
+import {createPostSchema} from './Schema';
 import Headericon from '../../../CustomComponent/Headericon';
-
-const {width, height} =Dimensions.get('window')
+import firestore from '@react-native-firebase/firestore';
+const {width, height} =Dimensions.get('window');
+import { useSelector} from 'react-redux';
+import auth from '@react-native-firebase/auth';
 const AttractPeople = ({navigation}) => {
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  const user = auth().currentUser;
+ 
+  const Postdata = useSelector((state) => state.userExist);
+  const hy= JSON.parse(Postdata.userr)
+  const mobileNumber=hy?.phoneNumber;
+  const dbRef = firestore().collection(mobileNumber).doc('createPost');
+  const dbR = firestore().collection(mobileNumber).doc('createPostt');
+
+const [date, setDate] = useState(new Date());
+const [show, setShow] = useState(false);
 const dateMax=new Date();
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+const onChangedate = (event, selectedDate) => {
+const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
-    setDate(currentDate);
+    setDate(currentDate);};
+  const showdate = () => {
+    setShow(true);};
+  const [time, settime] = useState(new Date());
+  const [showclock, setShowclock] = useState(false);
+  const onChangetime = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowclock(Platform.OS === 'ios');
+    settime(currentDate);};
+  const showtime = () => {
+    setShowclock(true);
   };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
-
-
+  const [loading, setloading] = useState(false);
   return (
-    <SafeAreaView >
-
-
+<SafeAreaView >
 <ScrollView>
 <View style={styles.container}> 
- 
-<Headericon name="bars" des="Attract People" navigation={navigation}/>
-  <View  style={styles.loginbox}>       
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          maximumDate  ={new Date( dateMax.getFullYear(), dateMax.getMonth()+1, dateMax.getDate())}
-         minimumDate ={new Date( dateMax.getFullYear(), dateMax.getMonth(), dateMax.getDate())}
-          mode={mode}
-          dayOfWeekFormat={'{dayofweek.abbreviated(2)}'}
-          is24Hour={false}
-          display="default"
-          onChange={onChange}
-          
-        />
-      )}
+<Headericon name="arrow-left" des="Attract People" navigation={navigation}/>
+<View  style={styles.loginbox}>       
 <Formik
    validationSchema={createPostSchema}
    initialValues={{ initialPoint: '', finalPoint: '',fare:'',seats:''
-   ,date:'',Description:'',vehicle:''
+   ,date:'',time:'',Description:'',vehicle:''
    ,creationDate:new Date().toLocaleDateString(),creationTime:new Date().toLocaleTimeString(),}}
-   onSubmit={values =>{console.log(values)}}
- >
+   onSubmit={(values,actions )=>{
+    actions.resetForm();
+    setloading(true)
+    firestore().collection('Users')
+    .doc(user?.uid).collection('post').doc().set({
+      initialPoint:values.initialPoint,
+       finalPoint:values.finalPoint,
+       fare:values.fare,
+      seats:values.seats
+      ,date:values.date,
+      time:values.time,
+      Description:values.Description,
+      vehicle:values.vehicle
+      ,creationDate:values.creationDate,
+      creationTime:values.creationTime,
+   }).then(() => {
+  setloading(false)
+
+  ,Alert.alert('Save successfully') })
+
+
+      }}>
    {({
      handleChange,
      handleBlur,
@@ -76,33 +83,33 @@ const dateMax=new Date();
      isValid,
    }) => (
      <>
-
-
 <Input
     leftIcon={{ type: 'font-awesome', name: 'adn' }}
     // inputContainerStyle={style.InputContainerStyle}
     leftIconContainerStyle={{color:'grey'}}
-    placeholder={"To\nDestination address"}
+    placeholder={"Starting place"}
     underlineColorAndroid={'transparent'}
     onChangeText={handleChange('initialPoint')}
     onBlur={handleBlur('initialPoint')}
     value={values.initialPoint}
     keyboardType="default"
+    errorMessage={errors.initialPoint && `${errors.initialPoint}` }
   /> 
-       {errors.initialPoint &&
-         <Text style={{ fontSize: 10, color: 'red' }}>{errors.initialPoint}</Text>}
-    <Input
+       {/* {errors.initialPoint &&
+         <Text style={{ fontSize: 10, color: 'red' }}>{errors.initialPoint}</Text>} */}
+<Input
         leftIcon={{ type: 'font-awesome', name: 'product-hunt' }}
         leftIconContainerStyle={{color:'red'}}
-        placeholder={"From\nspecify Initial point address"}
+        placeholder={"final place"}
        onChangeText={handleChange('finalPoint')}
         onBlur={handleBlur('finalPoint')}
         value={values.finalPoint}
         keyboardType="default"
+        errorMessage={errors.finalPoint && `${errors.finalPoint}` }
        />
-       {errors.finalPoint &&
+       {/* {errors.finalPoint &&
          <Text style={{ fontSize: 10, color: 'red' }}>{errors.finalPoint}</Text>
-       }
+       } */}
           <Input
         leftIcon={{ type: 'font-awesome', name: 'dollar' }}
         leftIconContainerStyle={{color:'red'}}
@@ -111,33 +118,82 @@ const dateMax=new Date();
         onBlur={handleBlur('fare')}
         value={values.fare}
         keyboardType="numeric"
+        errorMessage={errors.fare && `${errors.fare}` }
        />
-       {errors.fare &&
+       {/* {errors.fare &&
          <Text style={{ fontSize: 10, color: 'red' }}>{errors.fare}</Text>
-       }
+       } */}
 
-<View style={{flexDirection:'row',justifyContent:'space-between',paddingTop:10,paddingBottom:20}}>
-         <TouchableOpacity   style={{flexDirection:'row',borderBottomColor:'black',borderBottomWidth:1,borderRadius:10,padding:10}}  
-         
-      
-         onPress={showDatepicker}>
-         
-         <Icon
-  name='calendar'
-  color='black' size={25} />
- 
-  <Text style={{padding:5,paddingLeft:5,fontSize:15}}>{`${date.toDateString()}`}</Text>
- 
-  </TouchableOpacity>
-     
-       <TouchableOpacity   style={{flexDirection:'row',borderBottomColor:'black',borderBottomWidth:1,borderRadius:10,padding:10}}  onPress={showTimepicker} >
-         <Icon
-  name='clock'
-  color='black' size={25} />
-  <Text style={{padding:5,paddingLeft:5,fontSize:15}}>{`${date.toLocaleTimeString()}`}</Text>
-         </TouchableOpacity>
-       </View>
+{show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          maximumDate  ={new Date( dateMax.getFullYear(), dateMax.getMonth()+1, dateMax.getDate())}
+         minimumDate ={new Date( dateMax.getFullYear(), dateMax.getMonth(), dateMax.getDate())}
+          mode='date'
+          dayOfWeekFormat={'{dayofweek.abbreviated(2)}'}
+          is24Hour={false}
+          display="default"
+          onChange={onChangedate}
+          
+        />
+      )}
 
+<TouchableOpacity 
+       
+       onPress={()=>{showdate(),setFieldValue('date',date.toLocaleDateString());} }
+        >
+          <Input 
+          disabled
+          inputStyle={{color:'black'}}
+        rightIcon={{ type: 'font-awesome', name: 'calendar' }}
+        placeholder={date.toLocaleDateString()}
+        value={date.toLocaleDateString()}
+        onChangeText={handleChange('date')}
+        onBlur={handleBlur('date')}
+         errorMessage={errors.date && `${errors.date}` }
+      />
+       {/* {errors.date &&
+         <Text style={{ fontSize: 10, color: 'red' }}>{errors.date}</Text>
+       } */}
+       </TouchableOpacity>
+ 
+  
+  
+  {showclock && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={time}
+          maximumDate  ={new Date( dateMax.getFullYear(), dateMax.getMonth()+1, dateMax.getDate())}
+         minimumDate ={new Date( dateMax.getFullYear(), dateMax.getMonth(), dateMax.getDate())}
+          mode='time'
+          dayOfWeekFormat={'{dayofweek.abbreviated(2)}'}
+          is24Hour={false}
+          display="default"
+          onChange={onChangetime}
+          
+        />
+      )}
+
+<TouchableOpacity 
+       
+       onPress={()=>{showtime(),setFieldValue('time',time.toLocaleTimeString());} }
+        >
+          <Input 
+          disabled
+          inputStyle={{color:'black',backgroundColor:'white'}}
+        rightIcon={{ type: 'font-awesome', name: 'clock-o' }}
+        placeholder={time.toLocaleTimeString()}
+        value={time.toLocaleTimeString()}
+        onChangeText={handleChange('time')}
+        onBlur={handleBlur('time')}
+        errorMessage={errors.time && `${errors.time}` }
+      />
+       {/* {errors.time &&
+         <Text style={{ fontSize: 10, color: 'red' }}>{errors.time}</Text>
+       } */}
+       </TouchableOpacity>
+ 
        <Input
         leftIcon={{ type: 'font-awesome', name: 'car' }}
         leftIconContainerStyle={{color:'red'}}
@@ -146,20 +202,12 @@ const dateMax=new Date();
         onBlur={handleBlur('vehicle')}
         value={values.vehicle}
         keyboardType="default"
+        errorMessage={errors.vehicle && `${errors.vehicle}` }
        />
-       {errors.vehicle &&
+       {/* {errors.vehicle &&
          <Text style={{ fontSize: 10, color: 'red' }}>{errors.vehicle}</Text>
-       }
-       <TouchableOpacity style ={{flex:1, marginTop: 10, marginBottom:10, backgroundColor:null}}
-                                                  onPress={showDatepicker}>
-              <Input value = {values.date}  inputContainerStyle={{height: '60%'}}
-                     onChangeText={handleChange('date')}
-                     onBlur={()=>setFieldTouched('date')}
-                     label = "Date" labelStyle = {{fontSize: 15}}/>
-                       {errors.date &&
-         <Text style={{ fontSize: 10, color: 'red' }}>{errors.date}</Text>
-       }
-                     </TouchableOpacity>
+       } */}
+  
 
 
 
@@ -170,11 +218,12 @@ const dateMax=new Date();
        onChangeText={handleChange('seats')}
         onBlur={handleBlur('seats')}
         value={values.seats}
-        keyboardType="default"
+        keyboardType="numeric"
+        errorMessage={errors.seats && `${errors.seats}` }
        />
-       {errors.seats &&
+       {/* {errors.seats &&
          <Text style={{ fontSize: 10, color: 'red' }}>{errors.seats}</Text>
-       }
+       } */}
       
      <TextInput
          name="Description"
@@ -188,6 +237,7 @@ const dateMax=new Date();
          underlineColorAndroid="transparent"
          placeholderTextColor={"#9E9E9E"}
          multiline={true}
+         errorMessage={errors.Description && `${errors.Description}` }
        />
        {errors.Description &&
          <Text style={{ fontSize: 10, color: 'red' }}>{errors.Description}</Text>
@@ -198,20 +248,25 @@ const dateMax=new Date();
 <Button
                   title="Public Post"
                   icon={{
-                    name: 'edit',
+                    name: 'firefox',
                     type: 'font-awesome',
                     size: 25,
                     color: 'white',
                   }}
                   iconLeft
-                  buttonStyle={{height:50,width:'100%' }}
+                  buttonStyle={{height:50,width:'100%' ,backgroundColor:'green'}}
                   containerStyle={{}}
                   titleStyle={{ color: 'white',  }}
                   onPress={handleSubmit}
-                  disabled={!isValid }
-                  // disabled={!isValid || isSubmitting}
+                  // disabled={!isValid }
+                  disabled={!isValid || isSubmitting}
                   //  loading={isSubmitting}
         /> 
+
+
+
+
+        
      </>
    )}
  </Formik>
@@ -221,6 +276,18 @@ const dateMax=new Date();
             </View>                         
           </View>
 </ScrollView>
+{loading?  <View style={{ position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          opacity: 0.7,
+          backgroundColor:'grey',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width:width,height:height}}>
+            <ActivityIndicator  color="blue" size="large"/>
+            </View>:<></>}
 </SafeAreaView>
 
   )

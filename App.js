@@ -13,9 +13,12 @@ import {SignNavigation} from './src/component/signin/signinNavigation/SignNaviga
 import auth from '@react-native-firebase/auth'; 
 import { DrawerNavigation } from './src/component/Dashboard/Drawer/DrawerNavigation';
 import firestore from '@react-native-firebase/firestore';
-import { useDispatch} from 'react-redux';
-import {userr,term} from './src/component/Redux/UserReducer'
+import { useDispatch, useSelector} from 'react-redux';
+import {userr,term,mobile} from './src/component/Redux/UserReducer'
 const App= () => {
+// const phone=useSelector(state=> state.userExist.userr.phoneNumber);
+// console.log(hy);
+// dispatch(number(phone));
 
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(true);
@@ -23,16 +26,15 @@ const App= () => {
     setUser(user);
     dispatch(userr(JSON.stringify(user)));
     if (initializing) setInitializing(false);
-  }
-  const dispatch = useDispatch();
+
+    }
+    const dispatch = useDispatch();
     useEffect(() => {
       SplashScreen.hide();
     }, [])
-
     useEffect(() => {
-      const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-      return subscriber; // unsubscribe on unmount
-    
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
     }, []);
   
     if (initializing) return null;

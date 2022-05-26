@@ -7,6 +7,7 @@ import IIcon from 'react-native-vector-icons/Foundation';
 import { CheckBox } from 'react-native-elements';
 const TermConditions = ({navigation}) => {
   const [check1, setCheck1] = useState(false);
+  
   // const [valid, setvalid] = useState(check1);
   return (
     <View >

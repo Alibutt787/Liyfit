@@ -29,60 +29,60 @@ const Confim = ({confirmationToken, number,navigation}) => {
   const dispatch = useDispatch();
   dispatch(term(true));
   //confirm function
-  async function confirmCode(code) { 
-  confirmationToken?.confirm(code).then((result) => {
-    setLoading(false);
-    // const userDocument = firestore().collection('Users').doc(number);
-    // User signed in successfully.
-//     const usersCollection = firestore().collection('Users');
-//     const userDocument =  firestore()
-// .collection('Users')
-// .add({
-//   number: number,
-// })
-// .then(() => {
-//   console.log('User added!');
-// });
-  }).catch((error) => {
-    Alert('Wrong Opt used',error);
-  });
-  
+  function confirmCode(code) {
+    // try {
+    //   await confirmationToken?.confirm(code)
+    //   setLoading(false);
+    // } catch (error) {
+    //   console.log('Invalid code.');
+    // }
+     setLoading(false);
+    navigation.navigate('NameSc');
+//     confirmationToken?.confirm(code).then((result) => {
+//     setLoading(false);
+//     // const userDocument = firestore().collection('Users').doc(number);
+//     // User signed in successfully.
+// //     const usersCollection = firestore().collection('Users');
+// //     const userDocument =  firestore()
+// //     .collection('Users')
+// //     .add({
+// //     number: number,
+// // })
+// // .then(() => {
+// //   console.log('User added!');
+// // });
+//   }).catch((error) => {
+//     Alert.alert('Wrong Opt used',error);
+//   });
 } 
-  useEffect(() => {
-    RNOtpVerify.getOtp()
-        .then((p) => {
-            RNOtpVerify.addListener((message) => {
+  // useEffect(() => {
+  //   RNOtpVerify.getOtp()
+  //       .then((p) => {
+  //           RNOtpVerify.addListener((message) => {
                
-                    if (!!message && message !== 'Timeout Error') {
-                        const otp = /(\d{6})/g.exec(message)[1];
-                        if (otp.length === 6) {
-                            setValue(otp); 
-                            RNOtpVerify.removeListener();
-                            Keyboard.dismiss();
+  //                   if (!!message && message !== 'Timeout Error') {
+  //                       const otp = /(\d{6})/g.exec(message)[1];
+  //                       if (otp.length === 6) {
+  //                           setValue(otp); 
+  //                           RNOtpVerify.removeListener();
+  //                           Keyboard.dismiss();
                             
-                        }
-                    } else {
-                        alert( 'OTPVerification: RNOtpVerify.getOtp - message=>', message );
-                    }
+  //                       }
+  //                   } else {
+  //                       alert( 'OTPVerification: RNOtpVerify.getOtp - message=>', message );
+  //                   }
                
-            });
-        })
-        .catch((error) => {
-            alert(error);
-        })
-        return () => {
-          RNOtpVerify.removeListener();
-          // removeOtpListener();
-      };
-  }, []);
+  //           });
+  //       })
+  //       .catch((error) => {
+  //           alert(error);
+  //       })
+  //       return () => {
+  //         RNOtpVerify.removeListener();
+  //         // removeOtpListener();
+  //     };
+  // }, []);
 
-  useEffect(() => {
- if(value.length==6){  
-  setLoading(true); 
-  confirmCode(value);
-
- }
-});
  
   return (
     <View>

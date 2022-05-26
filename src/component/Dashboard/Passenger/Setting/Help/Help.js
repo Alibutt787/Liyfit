@@ -12,24 +12,24 @@ const Help = ({ navigation }) => {
             navigation.navigate('Contact_us');
           }}>
           <View style={styles.Item}>
-            <Icon name="user" size={25} color="grey" />
+            <Icon name="id-badge" size={25} color="grey" />
             <View>
-              <Text style={styles.size}> Contact US</Text>
-              <Text style={{ fontSize: 10, paddingLeft: 10 }}>
-                Question? Need Help?
+              <Text style={styles.size}>   Contact US</Text>
+              <Text style={{ fontSize: 10 }}>
+              {' '} {' '}  Question? Need Help?
               </Text>
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Help_content', { screen: 'TermsConditionPage' });
+            navigation.navigate('TermsPage');
           }}>
           <View style={styles.Item}>
             <Text style={styles.size}>
-              {' '}
+             
               <Icon name="key" size={25} color="grey" />
-              Terms and Privacy Policy
+              {' '} Terms and Privacy Policy
             </Text>
           </View>
         </TouchableOpacity>
@@ -40,8 +40,8 @@ const Help = ({ navigation }) => {
           <View style={styles.Item}>
             <Text style={styles.size}>
               {' '}
-              <Icon name="key" size={25} color="grey" />
-              App Info
+              <Icon name="info" size={25} color="grey" />
+              {' '} {' '}App Info
             </Text>
           </View>
         </TouchableOpacity>

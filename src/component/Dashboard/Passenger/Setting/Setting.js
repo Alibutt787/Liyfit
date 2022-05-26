@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View,TouchableOpacity,Alert,Share} from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Iconn from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import auth from '@react-native-firebase/auth';
 import Headericon from '../../../CustomComponent/Headericon';
@@ -28,12 +29,13 @@ const Setting = ({navigation}) => {
   return (
     <View >
       
-<Headericon name="bars" des="setting" navigation={navigation}/>
+<Headericon name="arrow-left" des="setting" navigation={navigation}/>
+
   <View >
 
   <TouchableOpacity  style={styles.Item}  onPress={()=>{navigation.navigate('ProfileNavigation')}}>
   <View  style={styles.ItemDes}>
-  <Icon name='user' size={25} color="grey"  />
+  <Iconn name='profile' size={25} color="grey"  />
   <View>
   <Text style={styles.size}>  Profile</Text>
  <Text style={{fontSize:10,paddingLeft:10}}>change photo, edit profile</Text>
@@ -46,7 +48,7 @@ const Setting = ({navigation}) => {
  
 <TouchableOpacity style={styles.Item}  onPress={()=>{navigation.navigate('AccountSetting')}}>
   <View  style={styles.ItemDes}>
-  <Icon name='user' size={25} color="grey"  />
+  <Icon name='user-cog' size={25} color="grey"  />
   <View>
   <Text style={styles.size}>  Account</Text>
  <Text style={{fontSize:10,paddingLeft:10}}>change number, Delete account?</Text>
@@ -60,7 +62,7 @@ const Setting = ({navigation}) => {
 
   <TouchableOpacity  style={styles.Item}     onPress={()=>{navigation.navigate('HelpSetting')}}>
   <View  style={styles.ItemDes}>
-  <Icon name='user' size={25} color="grey"  />
+  <Icon name='hands-helping' size={25} color="grey"  />
   <View>
   <Text style={styles.size}>  Help</Text>
  <Text style={{fontSize:10,paddingLeft:10}}>contact us, Terms and privacy policy, App info</Text>
@@ -74,13 +76,13 @@ const Setting = ({navigation}) => {
   <View  style={styles.Item}>
  <Text style={styles.size}> 
  <Ionicons name="share-social-outline" size={22} />
- Invite a friend
+ {' '} {' '}Invite a friend
  </Text>
   </View>
   </TouchableOpacity>
 
 
-  <TouchableOpacity       onPress={()=>Alert.alert(
+  <TouchableOpacity     style={{marginTop:60}}  onPress={()=>Alert.alert(
         "",
         "Are you sure to LogOut?",
         [
@@ -98,7 +100,7 @@ const Setting = ({navigation}) => {
   <View  style={styles.Item}>
  <Text style={styles.size}  > 
  <Ionicons name="exit-outline" size={22} />
-Sign Out
+ {' '}{' '}Sign Out
  </Text>
   </View>
   </TouchableOpacity>

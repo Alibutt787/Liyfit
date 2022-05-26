@@ -16,8 +16,7 @@ const Stack = createNativeStackNavigator();
           options={{ title: 'Welcome',headerShown: false }}/>
           
           <Stack.Screen name="ChangeNumber" component={ChangeNumber}  options={{ title: 'Welcome',headerShown: false }}/>
-          {/* <Stack.Screen name="AccountSetting" component={Account}  options={{ title: 'Welcome',headerShown: false }}/> */}
-         
+        
           </Stack.Navigator>
    
   );

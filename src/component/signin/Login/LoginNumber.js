@@ -34,20 +34,18 @@ export  const LoginNumber = ({navigation}) => {
   //   })  
      const [number,setnumber]=useState(value);
      async function signInWithPhoneNumber(phoneNumber) {
-    
       Keyboard.dismiss();
-      setLoading(true);
-      try {
-         const confirmation = await auth().signInWithPhoneNumber('+92'+phoneNumber);
-          setConfirm(confirmation);
-         setLoading(false);
-      
-      
-
-      } catch (error) {
-      alert('check your Internet',error); 
-      setLoading(false);           
-      } }
+      navigation.navigate('confirm');
+      // setLoading(true);
+      // try {
+      //    const confirmation = await auth().signInWithPhoneNumber('+92'+phoneNumber);
+      //     setConfirm(confirmation);
+      //    setLoading(false);
+      // } catch (error) {
+      //   console.log(error);
+      // alert('check your Internet'); 
+      // setLoading(false);           }
+      } 
 
         //component render
 if(!confirm){
@@ -123,7 +121,7 @@ if(!confirm){
                     }}
                     keyboardType="numeric"
                     placeholder="Mobile Number"
-                    autoFocus={true}
+                    // autoFocus={true}
                     onBlur={handleBlur('PHONENUMBER')}
                     onChangeText={handleChange('PHONENUMBER')}
                    value={values.PHONENUMBER}
@@ -144,7 +142,7 @@ if(!confirm){
                   marginTop: 30,
                   flex: 1,
                   width: 310,
-                  marginLeft: 25,}}
+                 alignSelf:'center'}}
                 titleStyle={{color: 'white', marginHorizontal: 20}}
                 onPress={handleSubmit}
                 // onPress={()=> {signInWithPhoneNumber(number) }} 

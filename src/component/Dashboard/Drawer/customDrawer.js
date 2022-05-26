@@ -39,7 +39,7 @@ const CustomDrawer = (props) => {
               fontFamily: 'Roboto-Medium',
               marginBottom: 5,
             }}>
-          Ali Butt </Text>
+         Driver  </Text>
           {/* <Text style={{position:'absolute',top:50,right:10}}> */}
           {/* <Ionicons name="chevron-forward" color="black" size={35} /> */}
             {/* </Text>  */}
@@ -50,7 +50,7 @@ const CustomDrawer = (props) => {
           source={require('../../../assets/mariel-rodriguez-lRAOnXGGoN0-unsplash.jpg')}
           style={{padding: 25}}>
         <Image  
-            source={require('../../../assets/license.jpg')}
+            source={require('../../../assets/cht.webp')}
             style={{height: 80, width: 80, borderRadius: 40,opacity:.8 }}
           />
           <Text 
@@ -62,7 +62,7 @@ const CustomDrawer = (props) => {
               color:'white'
               // ,alignSelf:'flex-end'
             }}>
-          Afaq Butt</Text>
+          Afaq sherazi</Text>
           {/* <Text style={{position:'absolute',top:50,right:10}}> */}
           {/* <Ionicons name="chevron-forward" color="black" size={35} /> */}
             {/* </Text>  */}

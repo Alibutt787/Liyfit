@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View ,SafeAreaView,ScrollView,Image,Dimensions,Alert} from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import SubHeadericon from '../../../CustomComponent/SubHeadericon';
 
 
 const ViewProfilePhoto = ({route,navigation}) => {
@@ -10,27 +11,21 @@ const ViewProfilePhoto = ({route,navigation}) => {
   return (
     <SafeAreaView >
     <View  style={{backgroundColor:'black', width: win.width,height: win.height,}}> 
-     <View style={{flexDirection:'row',backgroundColor:'white'}}>
-    <Icon name="arrow-left" size={25} color="black"  onPress={()=>{navigation.goBack()}} style={{paddingTop:20,paddingLeft:15,paddingRight:20}}/>
-    <Text style={{padding:15,marginLeft:'0%',marginTop:9,fontSize:22,color:'black'}}>Photo</Text>
-   
-   
-    </View>
-
+    <SubHeadericon name="arrow-left" des="Driver photo " navigation={navigation}/>
     <View >
     <Image
             style={{
 
               padding:40,
               marginTop:70,
-              width: win.width,
-              height: 420,
+              width: win.width-20,
+              height: 400,
              resizeMode:'stretch',
              alignSelf: "center",
            
              // borderRadius: 20,
             }} 
-          source={uri ? {uri} :require('../../../../../assets/uber.webp')}
+          source={uri ? {uri} :require('../../../../assets/dr.png')}
         /> 
         
 

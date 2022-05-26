@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Help from './Help';
 import Contact_info_Liyfit from './Contact_info_Liyfit';
 import AppInfo from './AppInfo';
+import TermsConditionPage from '../../../../TermsCondition/terms/TermsConditionPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +19,7 @@ const Stack = createNativeStackNavigator();
           options={{ title: 'Welcome',headerShown: false }}/>
           <Stack.Screen name="Contact_us" component={Contact_info_Liyfit}  options={{ title: 'Welcome',headerShown: false }}/>
           <Stack.Screen name="AppInfo" component={AppInfo}  options={{ title: 'Welcome',headerShown: false }}/>
+          <Stack.Screen name="TermsPage" component={TermsConditionPage}  options={{ title: 'Welcome',headerShown: false }}/>
          
           
           </Stack.Navigator>

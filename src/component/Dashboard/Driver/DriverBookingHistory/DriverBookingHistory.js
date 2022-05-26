@@ -6,14 +6,10 @@ import Headericon from '../../../CustomComponent/Headericon';
 
 const DATA = [
     { id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',},
-    { id: 'bd7acbea-c1b1-46c2-aed5-3ad5d3abb28ba',},
-    { id: 'bd7acbea-c1b1-46c2-aed5-3ad53abdb28ba',},
-    { id: 'bd7acbea-c1b1-46c2-aed5-3ad53dabb2d8ba',},
-    { id: 'bd7acbea-c1b1-46c2-aed5-3ad53abbd28ba',},
-    { id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28b2',}
 
 ]
   
+const dataContent={pic:'',name:'',email:'',number:''}
   const Item = ({navigation}) => (
    
        <TouchableHighlight
@@ -24,20 +20,20 @@ const DATA = [
         //   contactEmail: chatContent.email
         // }) }
         style={{ flex: 1, backgroundColor: '#eee4dc', padding: 10 }}
+        onPress={()=>navigation.navigate('BookedRideView',{dataContent})}
       > 
       <View style={{  flexDirection: 'row', paddingBottom: 5, borderBottomWidth: 1, borderColor: "#b7b7b7" }}>
       {/* <Image source={{uri: chatContent.profileImage }} style={{ width: 50, height: 50, borderRadius: 50 }} /> */}
    
-        <Image source={require('../../../../assets/ic_launcher.png')} style={{ width: 50, height: 50, borderRadius: 50 }} />
+        <Image source={require('../../../../assets/cht.webp')} style={{ width: 50, height: 50, borderRadius: 50 }} />
           <View style={{ marginLeft: 15 }}>
             {/* <Text style={{ fontSize: 23, fontWeight: 'bold' }}>{ chatContent.name }</Text> */}
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Content name</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Aqib Ali Butt</Text>
             {/* <Text style={{ fontSize: 13 }}>{ chatContent.lastMessage }</Text> */}
-            <Text style={{ fontSize: 10 }}>pakistan last sms</Text>
+            <Text style={{ fontSize: 10 }}>ride booked successfully</Text>
           </View>
       </View>
       </TouchableHighlight>
- 
   );
 export default  function DriverBookingHistory({navigation}) {
     const renderItem = () => (
@@ -45,8 +41,7 @@ export default  function DriverBookingHistory({navigation}) {
       );
     return (
       <View style={{ flex: 1, marginTop: 0, backgroundColor: '#eee4dc' }}>
-               <Headericon name="bars" des="Booked Ride " navigation={navigation}/>
-     
+               <Headericon name="arrow-left" des="Driver's booking " navigation={navigation}/>
      <FlatList
       data={DATA}
       renderItem={renderItem}

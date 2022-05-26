@@ -56,14 +56,15 @@ export const signUpValidationSchema = yup.object().shape({
       date: yup
       .string()
       .required('date is required '),
-      // time: yup
-      // .string()
-      // .required('time is required'),
+      time: yup
+      .string()
+      .required('time is required'),
       vehicle: yup
       .string()
-      .required('Vehicle is required'),
+      .required('Vehicle name is required'),
       seats: yup
       .string()
+      .max(12, ({ max }) => `Mobile no must be at least ${max} numbers`)
       .required('no. of seats are required'),
      Description : yup
       .string()

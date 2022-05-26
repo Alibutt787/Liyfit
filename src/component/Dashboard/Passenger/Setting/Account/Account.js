@@ -9,7 +9,7 @@ const Account = ({navigation}) => {
         <SubHeadericon name="arrow-left" des="Account " navigation={navigation}/>
         <TouchableOpacity       onPress={()=>{navigation.navigate('ChangeNumber')}}>
   <View  style={styles.Item}>
- <Text style={styles.size}> <Icon name='mobile' size={25} color="grey"  /> Change Number</Text>
+ <Text style={styles.size}> <Icon name='mobile' size={25} color="grey"  />  Change Number</Text>
   <Icon name='chevron-right' size={25} color="green"  />
   </View>
   </TouchableOpacity>
@@ -29,8 +29,8 @@ const Account = ({navigation}) => {
         ]
       )} >
   <View  style={styles.Item}>
- <Text style={styles.size}> <Icon name='trash' size={25} color="red"  /> Request to Delete Account</Text>
-  <Icon name='chevron-right' size={25} color="green"  />
+ <Text style={styles.size}> <Icon name='trash' size={25} color="red"  />  Request to Delete Account</Text>
+ 
   </View>
   </TouchableOpacity>
     </View>

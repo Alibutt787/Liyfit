@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View,Linking} from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Iconn from 'react-native-vector-icons/Feather';
 import { Avatar } from 'react-native-elements'
 import SubHeadericon from '../../../../CustomComponent/SubHeadericon';
 const Contact_info_Liyfit= ({navigation}) => {
@@ -63,10 +64,23 @@ const Contact_info_Liyfit= ({navigation}) => {
    Twitter{'\n'}
 </Text>
   </View>
+
+  </View>
+ 
+  <View  style={styles.Item}>
+  <Iconn name='phone-call' size={25} color="grey"  />
+  <View>
+  <Text style={
+    {fontSize:20,fontFamily:'serif',paddingLeft:10}}
+      onPress={() => Linking.openURL(`tel:${923314113737}`)}>
+   923314113737{'\n'}
+</Text>
+  </View>
+
   </View>
  </View>
   </View>
-<Text  style={{alignSelf:'center',marginTop:'30%'}}>
+<Text  style={{alignSelf:'center',marginTop:'10%'}}>
   From Liyfit
 </Text>
 </View>

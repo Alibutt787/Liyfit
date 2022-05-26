@@ -6,14 +6,15 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 const ViewProfilePhoto = ({route,navigation}) => {
   
   const win = Dimensions.get('window')
-  const uri =route.params.uri.uri;
+  const uri =route.params.uri;
+  console.log('hh',uri);
   return (
     <SafeAreaView >
     <View  style={{backgroundColor:'black', width: win.width,height: win.height,}}> 
      <View style={{flexDirection:'row',backgroundColor:'white'}}>
     <Icon name="arrow-left" size={25} color="black"  onPress={()=>{navigation.goBack()}} style={{paddingTop:20,paddingLeft:15,paddingRight:20}}/>
     <Text style={{padding:15,marginLeft:'0%',marginTop:9,fontSize:22,color:'black'}}>Photo</Text>
-    <Icon name="trash" size={25}  color='red'     
+    {/* <Icon name="trash" size={25}  color='red'     
        onPress={()=>Alert.alert(
         "Delete",
         "Are you want to delete the photo?",
@@ -28,7 +29,7 @@ const ViewProfilePhoto = ({route,navigation}) => {
         ]
       )}
     
-    style={{position:'absolute',bottom:13,right:18}}/>
+    style={{position:'absolute',bottom:13,right:18}}/> */}
    
     </View>
 
@@ -45,7 +46,8 @@ const ViewProfilePhoto = ({route,navigation}) => {
            
              // borderRadius: 20,
             }} 
-          source={uri ? {uri} :require('../../../../../assets/main.jpg')}
+          // source={uri ? {uri} :require('../../../../../assets/main.jpg')}
+          source={require('../../../../../assets/driverprofile.jpg')}
         /> 
         
 

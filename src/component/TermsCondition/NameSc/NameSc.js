@@ -1,12 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet,TextInput} from 'react-native';
+import {View, Text, StyleSheet,TextInput,Alert} from 'react-native';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as yup from 'yup'
 import { Formik } from 'formik'
-
+import firestore from '@react-native-firebase/firestore'
+import { useSelector} from 'react-redux';
+import Loading from '../../CustomComponent/Loading';
+import auth from '@react-native-firebase/auth';
 const NameSc = ({navigation}) => {
- const [state,setState]= useState();
+ const user = auth().currentUser;
+  console.log(user?.uid);
+//  const [loading, setloading] = useState(false);
     const NameValidationSchema = yup.object().shape({
         Firstname: yup
         .string()
@@ -50,7 +55,30 @@ const NameSc = ({navigation}) => {
 <Formik
    validationSchema={NameValidationSchema}
    initialValues={{ Firstname: '', Lastname: '' }}
-   onSubmit={values => {setState(values),console.log(values),navigation.navigate('TermConditions')}}>
+   onSubmit={(values,actions )=>{
+    actions.resetForm();
+    // setloading(true)
+//     firestore().collection('Users')
+//     .doc(user?.uid).set({
+//            yourName:values.Firstname,
+//            fatherName:values.Lastname,
+//            onlineRigtr:false,
+//      //  firestore.FieldValue.arrayUnion(values),
+//    }).then(() => {
+//   setloading(false)
+//  //  firestore().collection(number)
+//  //  .doc('registr').set({
+//  //         onlineRigtr:false,
+//  //   //  firestore.FieldValue.arrayUnion(values),
+//  // })
+//   ,Alert.alert('Save successfully') ,navigation.navigate('TermConditions') })
+  navigation.navigate('TermConditions') 
+   
+ 
+
+
+         
+    }}>
    {({
      handleChange,
      handleBlur,
@@ -63,7 +91,7 @@ const NameSc = ({navigation}) => {
        <TextInput
          name="Firstname"
          autoFocus={true}
-         placeholder="first Name"
+         placeholder="Your Name"
          style={{backgroundColor:'white',paddingLeft:15,marginTop:15}}
          onChangeText={handleChange('Firstname')}
          onBlur={handleBlur('Firstname')}
@@ -75,7 +103,7 @@ const NameSc = ({navigation}) => {
        }
        <TextInput
          name="Lastname"
-         placeholder="Last name"
+         placeholder="Father name"
          style={{backgroundColor:'white',paddingLeft:15,marginTop:15}}
          onChangeText={handleChange('Lastname')}
          onBlur={handleBlur('Lastname')}
@@ -109,6 +137,7 @@ const NameSc = ({navigation}) => {
    )}
  </Formik>
       </View>
+      {/* {loading?  <Loading/>:<></>} */}
     </View>
   );
 };
